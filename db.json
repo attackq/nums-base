@@ -1,0 +1,70 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "username": "a.panasik",
+      "password": "12345678",
+      "role": "admin",
+      "name": "Панасик А.М."
+    },
+    {
+      "id": 2,
+      "username": "k.pomazkin",
+      "password": "12345678",
+      "role": "stuff",
+      "name": "Помазкин К.В."
+    }
+  ],
+  "numbers": [
+    {
+      "301561": [
+        {
+          "title": "Кронштейн",
+          "id": 1,
+          "product": "Восток-3Д",
+          "creatorName": "Панасик А.М.",
+          "createdAt": 1686251546611
+        },
+        {
+          "title": "Кронштейн",
+          "id": 2,
+          "product": "Восток-3Д",
+          "creatorName": "Панасик А.М.",
+          "createdAt": 1686251243611
+        },
+        {
+          "title": "Кронштейн",
+          "id": 3,
+          "product": "Восток-3Д",
+          "creatorName": "Панасик А.М.",
+          "createdAt": 1686231243611
+        }
+      ]
+    },
+    {
+      "301568": [
+        {
+          "title": "Кронштейн",
+          "id": 1,
+          "product": "Восток-3Д",
+          "creatorName": "Панасик А.М.",
+          "createdAt": 1686251546611
+        },
+        {
+          "title": "Кронштейн",
+          "id": 2,
+          "product": "Восток-3Д",
+          "creatorName": "Панасик А.М.",
+          "createdAt": 1686251243611
+        },
+        {
+          "title": "Кронштейн",
+          "id": 3,
+          "product": "Восток-3Д",
+          "creatorName": "Панасик А.М.",
+          "createdAt": 1686231243611
+        }
+      ]
+    }
+  ]
+}

@@ -2,31 +2,11 @@
   "users": [
     {
       "id": 1,
+      "role": "stuff",
       "username": "a.panasik",
-      "password": "12345678",
-      "role": "admin",
-      "fullName": "Панасик А.М."
-    },
-    {
-      "id": 2,
-      "username": "k.pomazkin",
-      "password": "12345678",
-      "role": "stuff",
-      "fullName": "Помазкин К.В."
-    },
-    {
-      "id": 3,
-      "role": "admin",
-      "username": "toma",
-      "password": "sfasdfasdfas",
-      "fullName": "adfasfasfas"
-    },
-    {
-      "id": 4,
-      "role": "stuff",
-      "username": "slava",
-      "password": "asldlalda",
-      "fullName": "adsfasdfasdf"
+      "password": "12345",
+      "lastName": "Панасик",
+      "createdAt": 1686311737870
     }
   ],
   "numbers": [

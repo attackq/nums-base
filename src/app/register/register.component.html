@@ -5,18 +5,26 @@
   (ngSubmit)="registerUser()"
 >
   <mat-form-field>
-    <mat-label>Username</mat-label>
-    <input matInput formControlName="username" />
+    <mat-label>Логин</mat-label>
+    <input
+      matInput
+      formControlName="username"
+      placeholder="Например, a.panasik"
+    />
+    <mat-hint align="start">Используй первую букву имени и фамилию </mat-hint>
   </mat-form-field>
   <mat-form-field>
-    <mat-label>Password</mat-label>
+    <mat-label>Пароль</mat-label>
     <input matInput type="password" formControlName="password" />
   </mat-form-field>
   <mat-form-field>
-    <mat-label>Name</mat-label>
-    <input matInput formControlName="fullName" />
+    <mat-label>Фамилия</mat-label>
+    <input matInput formControlName="lastName" />
   </mat-form-field>
-  <div>
-    <button mat-raised-button color="accent" type="submit">Register</button>
+  <div class="login__btns">
+    <button mat-raised-button color="accent" type="submit">
+      Зарегистрироваться
+    </button>
+    <button mat-raised-button color="warn" routerLink="">Назад</button>
   </div>
 </form>

@@ -7,10 +7,3 @@
 .login__form mat-form-field {
   width: 400px;
 }
-.login__btns {
-  display: flex;
-  flex-direction: column;
-}
-.login__btns button {
-  margin: 5px 0;
-}

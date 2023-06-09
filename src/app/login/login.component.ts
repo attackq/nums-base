@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../service/auth.service';
-import { User } from '../service/user.interface';
 import { ToastrService } from 'ngx-toastr';
-import { catchError, first, take, takeLast, tap } from 'rxjs';
+import { tap } from 'rxjs';
 import { Router } from '@angular/router';
+import { User } from '../service/user.interface';
 
 @Component({
   selector: 'app-login',
@@ -28,6 +28,9 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
     sessionStorage.clear();
+    this.authService.getUserByUsername('a.panasik').subscribe((res: User[]) => {
+      console.log(res[0]);
+    });
   }
 
   loginUser() {
@@ -35,7 +38,7 @@ export class LoginComponent implements OnInit {
       this.authService
         .getUserByUsername(this.loginForm.value.username)
         .pipe(
-          tap((res) => {
+          tap((res: any) => {
             this.currentUser = res;
             if (this.currentUser.length !== 0) {
               if (
@@ -50,7 +53,7 @@ export class LoginComponent implements OnInit {
                   'fullName',
                   this.currentUser[0].fullName
                 );
-                this.router.navigate(['numbers']);
+                this.router.navigate(['users']);
                 this.toastr.success('Successfully logged!');
               } else {
                 this.toastr.error('Invalid credentials!');

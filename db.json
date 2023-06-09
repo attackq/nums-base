@@ -5,14 +5,28 @@
       "username": "a.panasik",
       "password": "12345678",
       "role": "admin",
-      "name": "Панасик А.М."
+      "fullName": "Панасик А.М."
     },
     {
       "id": 2,
       "username": "k.pomazkin",
       "password": "12345678",
       "role": "stuff",
-      "name": "Помазкин К.В."
+      "fullName": "Помазкин К.В."
+    },
+    {
+      "id": 3,
+      "role": "admin",
+      "username": "toma",
+      "password": "sfasdfasdfas",
+      "fullName": "adfasfasfas"
+    },
+    {
+      "id": 4,
+      "role": "stuff",
+      "username": "slava",
+      "password": "asldlalda",
+      "fullName": "adsfasdfasdf"
     }
   ],
   "numbers": [

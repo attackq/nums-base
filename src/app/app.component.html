@@ -1,5 +1,5 @@
 <mat-toolbar>
-  <span>NumsBase</span>
+  <span><a routerLink="">NumsBase</a></span>
   <span class="example-spacer"></span>
   <button
     mat-icon-button
@@ -16,9 +16,9 @@
     <mat-icon>share</mat-icon>
   </button>
   <button
-    *ngIf="currentUser"
     mat-raised-button
     color="accent"
+    *ngIf="loggedUser?.username"
     (click)="logout()"
   >
     Logout

@@ -4,9 +4,10 @@
       "id": 1,
       "role": "stuff",
       "username": "a.panasik",
-      "password": "12345",
-      "lastName": "Панасик",
-      "createdAt": 1686311737870
+      "password": "1234",
+      "lastName": "panasik",
+      "createdAt": 1686412677786,
+      "tokenId": "P2p12XmSn30Aj49hpaN3o"
     }
   ],
   "numbers": [

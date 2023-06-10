@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../service/auth.service';
+import { Observable } from 'rxjs';
+import { User } from '../service/user.interface';
 
 @Component({
   selector: 'app-userslist',
@@ -7,11 +9,11 @@ import { AuthService } from '../service/auth.service';
   styleUrls: ['./userslist.component.css'],
 })
 export class UserslistComponent implements OnInit {
-  isLogged: boolean;
   constructor(private authService: AuthService) {}
-
+  user: User | null;
   ngOnInit(): void {
-    let x = sessionStorage.getItem('username');
-    console.log(x);
+    this.authService.user$.subscribe((val: User | null) => {
+      this.user = val;
+    });
   }
 }

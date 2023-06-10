@@ -13,11 +13,12 @@ import { User } from '../service/user.interface';
 })
 export class LoginComponent implements OnInit {
   users: any;
-  currentUser: any;
+  currentUser: User;
   loginForm: FormGroup = this.builder.group({
     username: this.builder.control('', Validators.required),
     password: this.builder.control('', Validators.required),
   });
+  public showPassword: boolean = false;
 
   constructor(
     private builder: FormBuilder,
@@ -26,48 +27,40 @@ export class LoginComponent implements OnInit {
     private router: Router
   ) {}
 
-  ngOnInit(): void {
-    sessionStorage.clear();
-    this.authService.getUserByUsername('a.panasik').subscribe((res: User[]) => {
-      console.log(res[0]);
-    });
+  ngOnInit(): void {}
+
+  toggleShowPassword(): void {
+    this.showPassword = !this.showPassword;
   }
 
   loginUser() {
     if (this.loginForm.valid) {
       this.authService
-        .getUserByUsername(this.loginForm.value.username)
+        .getUserByUsername(this.loginForm.value.username.toLowerCase())
         .pipe(
-          tap((res: any) => {
-            this.currentUser = res;
-            if (this.currentUser.length !== 0) {
-              if (
-                this.loginForm.value.password === this.currentUser[0].password
-              ) {
-                sessionStorage.setItem(
-                  'username',
-                  this.currentUser[0].username
-                );
-                sessionStorage.setItem('role', this.currentUser[0].role);
-                sessionStorage.setItem(
-                  'fullName',
-                  this.currentUser[0].fullName
-                );
+          tap((val: User[]) => {
+            this.currentUser = val[0];
+            if (this.currentUser) {
+              if (this.loginForm.value.password === this.currentUser.password) {
+                localStorage.setItem('tokenId', `${this.currentUser.tokenId}`);
+                this.authService.user$.next(this.currentUser);
                 this.router.navigate(['users']);
-                this.toastr.success('Successfully logged!');
+                this.toastr.success('Авторизация успешно завершена!');
               } else {
-                this.toastr.error('Invalid credentials!');
-                this.loginForm.reset();
+                this.toastr.error('Неверный пароль!');
+                this.loginForm.controls['password'].setValue('');
               }
             } else {
-              this.toastr.error('Invalid credentials!');
-              this.loginForm.reset();
+              this.toastr.error(
+                'Пожалуйста, зарегестрируйтесь.',
+                'Пользователь не найден.'
+              );
             }
           })
         )
         .subscribe();
     } else {
-      this.toastr.error('Invalid credentials!');
+      this.toastr.error('Неверные данные.');
     }
   }
 }

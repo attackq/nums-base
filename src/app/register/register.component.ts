@@ -4,7 +4,8 @@ import { AuthService } from '../service/auth.service';
 import { User } from '../service/user.interface';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { filter, switchMap, tap } from 'rxjs';
+import { filter, isEmpty, map, switchMap, tap, throwError } from 'rxjs';
+import { nanoid } from 'nanoid';
 
 @Component({
   selector: 'app-register',
@@ -15,6 +16,8 @@ export class RegisterComponent implements OnInit {
   users: any;
   lastUserId: number;
   public newUser: User;
+  public res: any;
+  public showPassword: boolean = false;
 
   constructor(
     private builder: FormBuilder,
@@ -33,53 +36,56 @@ export class RegisterComponent implements OnInit {
   }
 
   registerForm: FormGroup = this.builder.group({
-    id: this.builder.control('', Validators.required),
-    role: this.builder.control('', Validators.required),
     username: this.builder.control('', Validators.required),
     password: this.builder.control('', Validators.required),
     lastName: this.builder.control('', Validators.required),
-    createdAt: this.builder.control('', Validators.required),
   });
 
+  toggleShowPassword(): void {
+    this.showPassword = !this.showPassword;
+  }
+
   registerUser() {
-    // this.registerForm.controls['id'].setValue(this.lastUserId + 1);
-    // this.registerForm.controls['role'].setValue('stuff');
-    // this.registerForm.controls['createdAt'].setValue(Date.now());
-    // const newUser = {
-    //   id: this.registerForm.value.id,
-    //   role: this.registerForm.value.role,
-    //   username: this.registerForm.value.username.toLowerCase(),
-    //   password: this.registerForm.value.password,
-    //   lastName: this.registerForm.value.lastName.toLowerCase(),
-    //   createdAt: this.registerForm.value.createdAt,
-    // };
-    // this.authService
-    //   .getUserByUsername(this.registerForm.value.username.toLowerCase())
-    //   .pipe(
-    //     filter((val: any) => [val].length !== 0),
-    //     switchMap((val: any) => {
-    //       console.log(val);
-    //     })
-    //   )
-    //   .subscribe();
-    // .pipe(
-    //   tap((val) => {
-    //     if (Object.entries(val).length === 0) {
-    //       if (this.registerForm.valid) {
-    //         this.authService
-    //           .registerUser(this.newUser))
-    //           .subscribe((res) => {
-    //             this.toastr.success('Registered Successfully');
-    //             this.router.navigate(['']);
-    //           });
-    //       } else {
-    //         this.toastr.error('Invalid Data');
-    //       }
-    //     } else {
-    //       this.toastr.error('User already exists');
-    //     }
-    //   })
-    // )
-    // .subscribe();
+    const newUser: User = {
+      id: this.lastUserId + 1,
+      role: 'stuff',
+      username: this.registerForm.value.username.toLowerCase(),
+      password: this.registerForm.value.password,
+      lastName: this.registerForm.value.lastName.toLowerCase(),
+      createdAt: Date.now(),
+      tokenId: nanoid(),
+    };
+    if (this.registerForm.valid) {
+      this.authService
+        .getUserByUsername(this.registerForm.value.username.toLowerCase())
+        .pipe(
+          map((val: User[]) => {
+            if (val.length === 0) {
+              return val;
+            } else {
+              throw Error;
+            }
+          }),
+          switchMap((val: User[]) => {
+            return this.authService.registerUser(newUser).pipe(
+              tap(() => {
+                this.toastr.success(
+                  'Войдите используя логин и пароль.',
+                  'Регистрация успешно завершена!'
+                );
+                this.router.navigate(['']);
+              })
+            );
+          })
+        )
+        .subscribe({
+          error: (err) => {
+            this.toastr.error('Пользователь с таким логином уже существует!');
+            this.registerForm.reset();
+          },
+        });
+    } else {
+      this.toastr.error('Неверные данные.');
+    }
   }
 }

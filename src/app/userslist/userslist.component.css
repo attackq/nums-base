@@ -1,0 +1,35 @@
+table {
+  width: 100%;
+}
+
+.mat-mdc-form-field {
+  font-size: 14px;
+  width: 100%;
+}
+.mat-column-id {
+  text-align: center;
+  width: 10% !important;
+}
+.mat-column-username,
+.mat-column-lastName {
+  text-align: center;
+  word-wrap: break-word !important;
+  white-space: unset !important;
+  width: 20% !important;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  word-break: break-word;
+  -ms-hyphens: auto;
+  -moz-hyphens: auto;
+  -webkit-hyphens: auto;
+  hyphens: auto;
+}
+
+.mat-column-date {
+  text-align: center;
+  width: 20% !important;
+}
+.mat-column-actions {
+  text-align: center;
+  width: 30% !important;
+}

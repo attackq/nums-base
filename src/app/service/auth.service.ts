@@ -46,4 +46,8 @@ export class AuthService {
   registerUser(user: User) {
     return this.http.post(this.baseUserUrl, user);
   }
+
+  deleteUser(id: string) {
+    return this.http.delete(this.baseUserUrl + '/' + id);
+  }
 }

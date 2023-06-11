@@ -2,12 +2,12 @@
   "users": [
     {
       "id": 1,
-      "role": "stuff",
+      "role": "admin",
       "username": "a.panasik",
       "password": "1234",
-      "lastName": "panasik",
-      "createdAt": 1686412677786,
-      "tokenId": "P2p12XmSn30Aj49hpaN3o"
+      "lastName": "Панасик",
+      "createdAt": 1686424894451,
+      "tokenId": "Iy3XxAfx2TGefQan_bfzt1"
     }
   ],
   "numbers": [

@@ -1,0 +1,19 @@
+<h1 mat-dialog-title>Удаление пользователя</h1>
+<div mat-dialog-content>
+  Вы действительно хотите удалить пользователя
+  <div class="username">
+    <strong>{{ data.username }}</strong>
+  </div>
+</div>
+<div mat-dialog-actions class="delete__btns">
+  <button mat-raised-button color="success" mat-dialog-close>Нет</button>
+  <button
+    mat-raised-button
+    color="warn"
+    mat-dialog-close
+    cdkFocusInitial
+    (click)="deleteUser(data.userId)"
+  >
+    Да
+  </button>
+</div>

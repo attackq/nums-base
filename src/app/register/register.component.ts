@@ -46,12 +46,21 @@ export class RegisterComponent implements OnInit {
   }
 
   registerUser() {
+    let lastName = this.registerForm.value.lastName
+      .toLowerCase()
+      .replaceAll(/\s/g, '');
+    lastName =
+      lastName.slice(0, 1).toUpperCase() + lastName.slice(1, lastName.length);
+    let username = this.registerForm.value.username
+      .toLowerCase()
+      .replaceAll(/\s/g, '');
+    console.log(username);
     const newUser: User = {
       id: this.lastUserId + 1,
       role: 'stuff',
-      username: this.registerForm.value.username.toLowerCase(),
+      username: username,
       password: this.registerForm.value.password,
-      lastName: this.registerForm.value.lastName.toLowerCase(),
+      lastName: lastName,
       createdAt: Date.now(),
       tokenId: nanoid(),
     };

@@ -20,6 +20,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { DeletePopupComponent } from './delete-popup/delete-popup.component';
 import { MatDialogModule } from '@angular/material/dialog';
+import { EditUserComponent } from './edit-user/edit-user.component';
 
 @NgModule({
   declarations: [
@@ -28,6 +29,7 @@ import { MatDialogModule } from '@angular/material/dialog';
     LoginComponent,
     UserslistComponent,
     DeletePopupComponent,
+    EditUserComponent,
   ],
   imports: [
     BrowserModule,

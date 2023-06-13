@@ -19,6 +19,9 @@ export class AppComponent implements OnInit {
     this.authService.user$.subscribe((user: User | null) => {
       this.loggedUser = user;
     });
+    this.authService.getUserById('1').subscribe((res) => {
+      console.log(res);
+    });
   }
 
   logout() {

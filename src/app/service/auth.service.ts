@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { User } from './user.interface';
+import { EditedUser, User } from './user.interface';
 import {
   BehaviorSubject,
   Observable,
@@ -43,8 +43,16 @@ export class AuthService {
     return this.http.get<User[]>(this.baseUserUrl + `/?username=${username}`);
   }
 
+  getUserById(id: string): Observable<User> {
+    return this.http.get<User>(this.baseUserUrl + '/' + id);
+  }
+
   registerUser(user: User) {
     return this.http.post(this.baseUserUrl, user);
+  }
+
+  editUser(id: string, body: EditedUser) {
+    return this.http.patch(this.baseUserUrl + '/' + id, body);
   }
 
   deleteUser(id: string) {

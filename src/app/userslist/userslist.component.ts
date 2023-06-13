@@ -8,6 +8,7 @@ import { switchMap, tap } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { DeletePopupComponent } from '../delete-popup/delete-popup.component';
+import { EditUserComponent } from '../edit-user/edit-user.component';
 
 export interface UserData {
   id: string;
@@ -81,11 +82,15 @@ export class UserslistComponent implements OnInit {
       .afterClosed()
       .pipe(switchMap(() => this.refreshData()))
       .subscribe();
-    // this.dialogRef.afterClosed().subscribe(() => {
-    //   this.toastr.error('asdasdada');
-    // });
-    // this.authService.deleteUser(id).subscribe();
-    // this.refreshData().subscribe();
-    // this.toastr.success('Пользователь удален!');
+  }
+
+  openEditUser(id: string, username: string, lastname: string) {
+    let dialogRef = this.dialog.open(EditUserComponent, {
+      data: { userId: id, username: username, lastname: lastname },
+    });
+    dialogRef
+      .afterClosed()
+      .pipe(switchMap(() => this.refreshData()))
+      .subscribe();
   }
 }

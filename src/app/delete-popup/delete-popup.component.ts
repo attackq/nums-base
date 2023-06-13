@@ -16,7 +16,8 @@ export class DeletePopupComponent {
   ) {}
 
   deleteUser(id: string) {
-    this.authService.deleteUser(id).subscribe();
-    this.toastr.success('Пользователь удален!');
+    this.authService.deleteUser(id).subscribe(() => {
+      this.toastr.success('Пользователь удален!');
+    });
   }
 }

@@ -13,10 +13,7 @@ import { nanoid } from 'nanoid';
   styleUrls: ['./register.component.css'],
 })
 export class RegisterComponent implements OnInit {
-  users: any;
-  lastUserId: number;
-  public newUser: User;
-  public res: any;
+  public lastUserId: number;
   public showPassword: boolean = false;
 
   constructor(
@@ -27,10 +24,9 @@ export class RegisterComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.authService.getAllUsers().subscribe((res) => {
-      if (Object.entries(res).length !== 0) {
-        this.users = res;
-        this.lastUserId = this.users[this.users.length - 1].id;
+    this.authService.getAllUsers().subscribe((users: User[]) => {
+      if (users.length !== 0) {
+        this.lastUserId = users[users.length - 1].id;
       }
     });
   }
@@ -54,7 +50,6 @@ export class RegisterComponent implements OnInit {
     let username = this.registerForm.value.username
       .toLowerCase()
       .replaceAll(/\s/g, '');
-    console.log(username);
     const newUser: User = {
       id: this.lastUserId + 1,
       role: 'stuff',
@@ -66,16 +61,16 @@ export class RegisterComponent implements OnInit {
     };
     if (this.registerForm.valid) {
       this.authService
-        .getUserByUsername(this.registerForm.value.username.toLowerCase())
+        .getUserByUsername(username)
         .pipe(
-          map((val: User[]) => {
-            if (val.length === 0) {
-              return val;
+          map((user: User[]) => {
+            if (user.length === 0) {
+              return user;
             } else {
               throw Error;
             }
           }),
-          switchMap((val: User[]) => {
+          switchMap(() => {
             return this.authService.registerUser(newUser).pipe(
               tap(() => {
                 this.toastr.success(

@@ -12,9 +12,8 @@ import { User } from '../service/user.interface';
   styleUrls: ['./login.component.css'],
 })
 export class LoginComponent implements OnInit {
-  users: any;
-  currentUser: User;
-  loginForm: FormGroup = this.builder.group({
+  public currentUser: User;
+  public loginForm: FormGroup = this.builder.group({
     username: this.builder.control('', Validators.required),
     password: this.builder.control('', Validators.required),
   });
@@ -38,9 +37,10 @@ export class LoginComponent implements OnInit {
       this.authService
         .getUserByUsername(this.loginForm.value.username.toLowerCase())
         .pipe(
-          tap((val: User[]) => {
-            this.currentUser = val[0];
+          tap((user: User[]) => {
+            this.currentUser = user[0];
             if (this.currentUser) {
+              // console.log(this.currentUser);
               if (this.loginForm.value.password === this.currentUser.password) {
                 localStorage.setItem('tokenId', `${this.currentUser.tokenId}`);
                 this.authService.user$.next(this.currentUser);

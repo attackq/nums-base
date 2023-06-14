@@ -12,8 +12,6 @@ import { User } from '../service/user.interface';
   styleUrls: ['./edit-user.component.css'],
 })
 export class EditUserComponent {
-  public showPassword: boolean = false;
-
   constructor(
     @Inject(MAT_DIALOG_DATA)
     public data: { userId: string; username: string; lastname: string },
@@ -22,27 +20,34 @@ export class EditUserComponent {
     private toastr: ToastrService
   ) {}
 
-  registerForm: FormGroup = this.builder.group({
+  public editForm: FormGroup = this.builder.group({
     username: this.builder.control(this.data.username, Validators.required),
     lastName: this.builder.control(this.data.lastname, Validators.required),
   });
 
-  toggleShowPassword(): void {
-    this.showPassword = !this.showPassword;
-  }
-
   editUser() {
-    this.authService
-      .editUser(this.data.userId, this.registerForm.value)
-      .pipe(
-        switchMap(() => {
-          return this.authService
-            .getUserByUsername(this.registerForm.value.username)
-            .pipe(tap((user: User[]) => this.authService.user$.next(user[0])));
-        })
-      )
-      .subscribe(() => {
-        this.toastr.success('Пользователь изменён!');
-      });
+    if (
+      this.data.username !== this.editForm.value.username ||
+      this.data.lastname !== this.editForm.value.lastName
+    ) {
+      this.authService
+        .editUser(this.data.userId, this.editForm.value)
+        .pipe(
+          switchMap(() => {
+            return this.authService.getUserById(this.data.userId).pipe(
+              tap((user: User) => {
+                if (user.tokenId === localStorage.getItem('tokenId')) {
+                  this.authService.user$.next(user);
+                }
+              })
+            );
+          })
+        )
+        .subscribe(() => {
+          this.toastr.success('Пользователь изменён!');
+        });
+    } else {
+      this.toastr.warning('Данные не изменены!');
+    }
   }
 }

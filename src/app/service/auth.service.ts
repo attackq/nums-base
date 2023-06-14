@@ -20,6 +20,7 @@ export class AuthService {
   public user$: Subject<User | null> = new ReplaySubject<User | null>(1);
 
   baseUserUrl: string = 'http://localhost:3000/users';
+  baseNumbersUrl: string = 'http://localhost:3000/numbers';
 
   constructor(private http: HttpClient) {
     this.getAllUsers()

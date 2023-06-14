@@ -1,11 +1,5 @@
 <h1 mat-dialog-title>Изменение пользователя</h1>
-<form
-  mat-dialog-content
-  action=""
-  class="register__form"
-  [formGroup]="registerForm"
-  (ngSubmit)="editUser()"
->
+<form class="register__form" [formGroup]="editForm" (ngSubmit)="editUser()">
   <mat-form-field>
     <mat-label>Логин</mat-label>
     <input
@@ -25,18 +19,3 @@
     <button mat-raised-button color="warn" mat-dialog-close>Назад</button>
   </div>
 </form>
-
-<!--
-<h1 mat-dialog-title>Изменение пользователя</h1>
-<div mat-dialog-content>
-  Вы действительно хотите удалить пользователя
-  <div class="username">
-    <strong>{{ data.username }}</strong>
-  </div>
-</div>
-<div mat-dialog-actions class="delete__btns">
-  <button mat-raised-button color="success" mat-dialog-close>Нет</button>
-  <button mat-raised-button color="warn" mat-dialog-close cdkFocusInitial>
-    Да
-  </button>
-</div> -->

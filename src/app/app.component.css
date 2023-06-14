@@ -5,3 +5,9 @@
   margin: 0 10%;
   margin-top: 15px;
 }
+span {
+  margin: 0 10px;
+}
+span a {
+  text-decoration: none;
+}

@@ -7,7 +7,7 @@ import { AuthService } from '../service/auth.service';
 import { Observable, map, startWith, switchMap, tap } from 'rxjs';
 import { Number } from '../service/number.interface';
 import { FormControl } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-numbers-list',
@@ -23,7 +23,11 @@ export class NumbersListComponent {
   options: string[] = [];
   filteredOptions: Observable<string[]>;
   isShown: boolean = false;
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+    private route: ActivatedRoute
+  ) {}
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -52,7 +56,6 @@ export class NumbersListComponent {
   }
 
   showTable(id: string) {
-    this.router.navigate(['numbers', id]);
     console.log('halle');
     this.isShown = !this.isShown;
     return this.authService
@@ -62,6 +65,7 @@ export class NumbersListComponent {
           this.dataSource = new MatTableDataSource(number.data);
           this.dataSource.paginator = this.paginator;
           this.dataSource.sort = this.sort;
+          this.router.navigate(['details', id], { relativeTo: this.route });
         })
       )
       .subscribe();

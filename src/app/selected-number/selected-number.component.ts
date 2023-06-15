@@ -24,18 +24,19 @@ export class SelectedNumberComponent implements OnInit {
         switchMap((params: Params) => {
           return this.authService.getNumberById(params['id']).pipe(
             tap((number: any) => {
-              console.log(number.data);
+              console.log(number);
               this.dataSource = new MatTableDataSource(number.data);
               this.dataSource.paginator = this.paginator;
               this.dataSource.sort = this.sort;
-              this.router.navigate([
-                { outlets: { details: ['numbers', params['id']] } },
-              ]);
+              // this.router.navigate([
+              //   { outlets: { selected: ['number', params['id']] } },
+              // ]);
             })
           );
         })
       )
       .subscribe();
+    console.log('fasdfndasjfasjf');
   }
   displayedColumns: string[] = ['id', 'title', 'product', 'creator', 'date'];
   dataSource: MatTableDataSource<any>;

@@ -20,7 +20,10 @@ import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { DeletePopupComponent } from './delete-popup/delete-popup.component';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { EditUserComponent } from './edit-user/edit-user.component';
+import { NumbersListComponent } from './numbers-list/numbers-list.component';
+import { SelectedNumberComponent } from './selected-number/selected-number.component';
 
 @NgModule({
   declarations: [
@@ -30,6 +33,8 @@ import { EditUserComponent } from './edit-user/edit-user.component';
     UserslistComponent,
     DeletePopupComponent,
     EditUserComponent,
+    NumbersListComponent,
+    SelectedNumberComponent,
   ],
   imports: [
     BrowserModule,
@@ -41,6 +46,7 @@ import { EditUserComponent } from './edit-user/edit-user.component';
     MatToolbarModule,
     MatIconModule,
     MatButtonModule,
+    MatAutocompleteModule,
     ReactiveFormsModule,
     HttpClientModule,
     MatTableModule,

@@ -1,17 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { EditedUser, User } from './user.interface';
-import {
-  BehaviorSubject,
-  Observable,
-  ReplaySubject,
-  Subject,
-  filter,
-  from,
-  map,
-  of,
-  tap,
-} from 'rxjs';
+import { Observable, ReplaySubject, Subject, map, tap } from 'rxjs';
+import { Number } from './number.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -40,12 +31,19 @@ export class AuthService {
     return this.http.get<User[]>(this.baseUserUrl);
   }
 
+  getAllNumbers(): Observable<Number[]> {
+    return this.http.get<Number[]>(this.baseNumbersUrl);
+  }
+
   getUserByUsername(username: string): Observable<User[]> {
     return this.http.get<User[]>(this.baseUserUrl + `/?username=${username}`);
   }
 
   getUserById(id: string): Observable<User> {
     return this.http.get<User>(this.baseUserUrl + '/' + id);
+  }
+  getNumberById(id: string): Observable<Number> {
+    return this.http.get<Number>(this.baseNumbersUrl + '/' + id);
   }
 
   registerUser(user: User) {

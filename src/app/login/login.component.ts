@@ -44,7 +44,7 @@ export class LoginComponent implements OnInit {
               if (this.loginForm.value.password === this.currentUser.password) {
                 localStorage.setItem('tokenId', `${this.currentUser.tokenId}`);
                 this.authService.user$.next(this.currentUser);
-                this.router.navigate(['users']);
+                this.router.navigate(['numbers']);
                 this.toastr.success('Авторизация успешно завершена!');
               } else {
                 this.toastr.error('Неверный пароль!');

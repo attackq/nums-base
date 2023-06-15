@@ -3,10 +3,19 @@
   <input
     matInput
     (keyup)="applyFilter($event)"
-    placeholder="Напр. Панасик"
+    placeholder="Напр. 301561"
     #input
   />
 </mat-form-field>
+
+<div class="btns-container">
+  <button mat-raised-button (click)="addData()" class="add__btn">
+    Добавить
+  </button>
+  <button mat-raised-button color="accent" (click)="navigate()">
+    Cбросить
+  </button>
+</div>
 
 <div class="mat-elevation-z8">
   <table mat-table [dataSource]="dataSource" matSort>

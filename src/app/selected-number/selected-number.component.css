@@ -5,3 +5,9 @@ table {
   font-size: 14px;
   width: 100%;
 }
+.btns-container {
+  margin-bottom: 25px;
+}
+.add__btn {
+  margin-right: 25px;
+}

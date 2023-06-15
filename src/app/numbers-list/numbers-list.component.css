@@ -2,5 +2,14 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  /* width: 400px; */
+}
+
+.nums {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.nums button {
+  margin-bottom: 20px;
 }

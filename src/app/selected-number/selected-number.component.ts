@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatTableDataSource } from '@angular/material/table';
+import { MatTable, MatTableDataSource } from '@angular/material/table';
 import { User } from '../service/user.interface';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
@@ -13,37 +13,42 @@ import { switchMap, tap } from 'rxjs';
   styleUrls: ['./selected-number.component.css'],
 })
 export class SelectedNumberComponent implements OnInit {
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatTable) table: MatTable<Number[]>;
+
+  displayedColumns: string[] = [
+    'id',
+    'title',
+    'product',
+    'creator',
+    'date',
+    'actions',
+  ];
+  dataSource: MatTableDataSource<Number>;
+  currentUser: User | null;
+
   constructor(
     private authService: AuthService,
-    private router: Router,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private router: Router
   ) {}
+
   ngOnInit(): void {
     this.activatedRoute.params
       .pipe(
         switchMap((params: Params) => {
           return this.authService.getNumberById(params['id']).pipe(
             tap((number: any) => {
-              console.log(number);
               this.dataSource = new MatTableDataSource(number.data);
               this.dataSource.paginator = this.paginator;
               this.dataSource.sort = this.sort;
-              // this.router.navigate([
-              //   { outlets: { selected: ['number', params['id']] } },
-              // ]);
             })
           );
         })
       )
       .subscribe();
-    console.log('fasdfndasjfasjf');
   }
-  displayedColumns: string[] = ['id', 'title', 'product', 'creator', 'date'];
-  dataSource: MatTableDataSource<any>;
-  currentUser: User | null;
-
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-  @ViewChild(MatSort) sort: MatSort;
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
@@ -51,5 +56,19 @@ export class SelectedNumberComponent implements OnInit {
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
     }
+  }
+
+  addData() {
+    this.dataSource.data.push();
+    this.table.renderRows();
+  }
+
+  removeData() {
+    this.dataSource.data.pop();
+    this.table.renderRows();
+  }
+
+  navigate() {
+    this.router.navigate(['/numbers']);
   }
 }

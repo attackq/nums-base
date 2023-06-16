@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { MatTable, MatTableDataSource } from '@angular/material/table';
 import { User } from '../service/user.interface';
 import { MatPaginator } from '@angular/material/paginator';
@@ -11,6 +11,7 @@ import { switchMap, tap } from 'rxjs';
   selector: 'app-selected-number',
   templateUrl: './selected-number.component.html',
   styleUrls: ['./selected-number.component.css'],
+  encapsulation: ViewEncapsulation.None,
 })
 export class SelectedNumberComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -40,7 +41,11 @@ export class SelectedNumberComponent implements OnInit {
         switchMap((params: Params) => {
           return this.authService.getNumberById(params['id']).pipe(
             tap((number: any) => {
-              this.dataSource = new MatTableDataSource(number.data);
+              const n = number.data.filter((i: any) => i.id !== 0);
+              // console.log(n);
+              // console.log(number.data);
+
+              this.dataSource = new MatTableDataSource(n);
               this.dataSource.paginator = this.paginator;
               this.dataSource.sort = this.sort;
             })
@@ -66,9 +71,5 @@ export class SelectedNumberComponent implements OnInit {
   removeData() {
     this.dataSource.data.pop();
     this.table.renderRows();
-  }
-
-  navigate() {
-    this.router.navigate(['/numbers']);
   }
 }

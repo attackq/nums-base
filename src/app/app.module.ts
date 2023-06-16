@@ -24,6 +24,7 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { EditUserComponent } from './edit-user/edit-user.component';
 import { NumbersListComponent } from './numbers-list/numbers-list.component';
 import { SelectedNumberComponent } from './selected-number/selected-number.component';
+import { NewcardPopupComponent } from './newcard-popup/newcard-popup.component';
 
 @NgModule({
   declarations: [
@@ -35,6 +36,7 @@ import { SelectedNumberComponent } from './selected-number/selected-number.compo
     EditUserComponent,
     NumbersListComponent,
     SelectedNumberComponent,
+    NewcardPopupComponent,
   ],
   imports: [
     BrowserModule,

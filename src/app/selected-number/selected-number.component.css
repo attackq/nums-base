@@ -1,13 +1,25 @@
 table {
   width: 100%;
 }
-.mat-mdc-form-field {
+/* .mat-mdc-form-field {
   font-size: 14px;
   width: 100%;
-}
+} */
 .btns-container {
   margin-bottom: 25px;
 }
 .add__btn {
   margin-right: 25px;
+}
+.selected__search {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+  /* justify-content: center; */
+}
+.selected__btn {
+  margin-left: 20px;
+}
+.selected__field {
+  margin-bottom: -1.25em;
 }

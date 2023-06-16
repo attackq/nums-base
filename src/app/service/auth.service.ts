@@ -9,6 +9,7 @@ import { Number } from './number.interface';
 })
 export class AuthService {
   public user$: Subject<User | null> = new ReplaySubject<User | null>(1);
+  public isActiiveBtn$: Subject<boolean> = new ReplaySubject<boolean>(1);
 
   baseUserUrl: string = 'http://localhost:3000/users';
   baseNumbersUrl: string = 'http://localhost:3000/numbers';
@@ -22,6 +23,7 @@ export class AuthService {
         }),
         tap((users: User[]) => {
           this.user$.next(users[0]);
+          this.isActiiveBtn$.next(true);
         })
       )
       .subscribe();
@@ -42,12 +44,21 @@ export class AuthService {
   getUserById(id: string): Observable<User> {
     return this.http.get<User>(this.baseUserUrl + '/' + id);
   }
+
   getNumberById(id: string): Observable<Number> {
     return this.http.get<Number>(this.baseNumbersUrl + '/' + id);
   }
 
   registerUser(user: User) {
     return this.http.post(this.baseUserUrl, user);
+  }
+
+  addNumber(id: string, number: Number) {
+    return this.http.patch(this.baseNumbersUrl + 'id', number);
+  }
+
+  addCard(card: Number) {
+    return this.http.post(this.baseNumbersUrl, card);
   }
 
   editUser(id: string, body: EditedUser) {

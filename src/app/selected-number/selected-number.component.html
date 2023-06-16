@@ -1,20 +1,19 @@
-<mat-form-field>
-  <mat-label>Поиск</mat-label>
-  <input
-    matInput
-    (keyup)="applyFilter($event)"
-    placeholder="Напр. 301561"
-    #input
-  />
-</mat-form-field>
-
-<div class="btns-container">
-  <button mat-raised-button (click)="addData()" class="add__btn">
+<div class="selected__search">
+  <mat-form-field class="selected__field">
+    <mat-label>Поиск</mat-label>
+    <input
+      matInput
+      (keyup)="applyFilter($event)"
+      placeholder="Напр. 301561"
+      #input
+    />
+  </mat-form-field>
+  <button mat-raised-button (click)="addData()" class="selected__btn">
     Добавить
   </button>
-  <button mat-raised-button color="accent" (click)="navigate()">
-    Cбросить
-  </button>
+  <!-- <button mat-raised-button color="accent" (click)="navigate()">
+            Cбросить
+          </button> -->
 </div>
 
 <div class="mat-elevation-z8">
@@ -30,7 +29,7 @@
     </ng-container>
 
     <ng-container matColumnDef="product">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Наименование</th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Изделие</th>
       <td mat-cell *matCellDef="let num">{{ num.product }}</td>
     </ng-container>
 
@@ -77,7 +76,12 @@
     <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
 
     <tr class="mat-row" *matNoDataRow>
-      <td class="mat-cell" colspan="4">Нет совпадений с "{{ input.value }}"</td>
+      <td class="mat-cell" colspan="4" *ngIf="input.value.length !== 0">
+        Нет совпадений с "{{ input.value }}"
+      </td>
+      <h3 style="text-align: center" *ngIf="input.value.length === 0">
+        Please, register the first number
+      </h3>
     </tr>
   </table>
   <mat-paginator

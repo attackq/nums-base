@@ -1,0 +1,7 @@
+.mat-mdc-dialog-actions {
+  justify-content: center;
+}
+.mat-success {
+  background-color: green;
+  color: #fff;
+}

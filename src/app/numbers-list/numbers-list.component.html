@@ -1,6 +1,6 @@
-<form class="numbers-form">
-  <mat-form-field class="example-full-width">
-    <mat-label>Введите номер</mat-label>
+<form class="numbers__form">
+  <mat-form-field class="numbers__field">
+    <mat-label>Введите номер карточки</mat-label>
     <input
       type="text"
       placeholder="Выберите один"
@@ -8,6 +8,7 @@
       matInput
       [formControl]="myControl"
       [matAutocomplete]="auto"
+      maxlength="6"
     />
     <mat-autocomplete #auto="matAutocomplete">
       <mat-option
@@ -19,6 +20,21 @@
       </mat-option>
     </mat-autocomplete>
   </mat-form-field>
+  <div class="numbers__btns">
+    <button
+      mat-raised-button
+      type="button"
+      class="numbers__btns-add"
+      (click)="openNewCardDialog()"
+      [color]="isActive ? '' : 'primary'"
+      [disabled]="isActive"
+    >
+      Новая карточка
+    </button>
+    <button mat-raised-button color="accent" (click)="navigate()">
+      Cбросить
+    </button>
+  </div>
 </form>
-
+<div class="line"></div>
 <router-outlet></router-outlet>

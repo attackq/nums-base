@@ -92,29 +92,13 @@
     },
     {
       "id": "301569",
-      "data": [
-        {
-          "title": "2Кронштейн",
-          "id": "1",
-          "product": "Родник",
-          "creatorName": "Панасик",
-          "createdAt": 1686424894451
-        },
-        {
-          "title": "2Кронштейн1",
-          "id": "2",
-          "product": "Родник",
-          "creatorName": "Панасик",
-          "createdAt": 1686424894451
-        },
-        {
-          "title": "2Кронштейн2",
-          "id": "3",
-          "product": "Родник",
-          "creatorName": "Панасик",
-          "createdAt": 1686424894451
-        }
-      ]
+      "data": {
+        "title": "string",
+        "id": 1,
+        "product": "string",
+        "creatorName": "string",
+        "createdAt": 3221
+      }
     },
     {
       "id": "715143",
@@ -238,6 +222,18 @@
     },
     {
       "id": "313132",
+      "data": [
+        {
+          "title": "",
+          "id": 0,
+          "product": "",
+          "creatorName": "",
+          "createdAt": 0
+        }
+      ]
+    },
+    {
+      "id": "731333",
       "data": [
         {
           "title": "",

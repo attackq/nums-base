@@ -25,6 +25,8 @@ import { EditUserComponent } from './edit-user/edit-user.component';
 import { NumbersListComponent } from './numbers-list/numbers-list.component';
 import { SelectedNumberComponent } from './selected-number/selected-number.component';
 import { NewcardPopupComponent } from './newcard-popup/newcard-popup.component';
+import { MatCardModule } from '@angular/material/card';
+import { NewnumberPopupComponent } from './newnumber-popup/newnumber-popup.component';
 
 @NgModule({
   declarations: [
@@ -37,6 +39,7 @@ import { NewcardPopupComponent } from './newcard-popup/newcard-popup.component';
     NumbersListComponent,
     SelectedNumberComponent,
     NewcardPopupComponent,
+    NewnumberPopupComponent,
   ],
   imports: [
     BrowserModule,
@@ -45,6 +48,7 @@ import { NewcardPopupComponent } from './newcard-popup/newcard-popup.component';
     MatFormFieldModule,
     MatSelectModule,
     MatInputModule,
+    MatCardModule,
     MatToolbarModule,
     MatIconModule,
     MatButtonModule,

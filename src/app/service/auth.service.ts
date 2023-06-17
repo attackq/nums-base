@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { EditedUser, User } from './user.interface';
 import { Observable, ReplaySubject, Subject, map, tap } from 'rxjs';
-import { Number } from './number.interface';
+import { EditedCardData, Number } from './number.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -45,16 +45,27 @@ export class AuthService {
     return this.http.get<User>(this.baseUserUrl + '/' + id);
   }
 
-  getNumberById(id: string): Observable<Number> {
+  getCardById(id: string): Observable<Number> {
     return this.http.get<Number>(this.baseNumbersUrl + '/' + id);
+  }
+
+  getCardByIdData(id: string): Observable<any> {
+    return this.http.get<any>(this.baseNumbersUrl + '/' + id);
+  }
+
+  postNewNumberToCard(id: string, body: EditedCardData) {
+    return this.http.patch(this.baseNumbersUrl + '/' + id, body);
+  }
+  postToCard(id: string, body: EditedCardData) {
+    return this.http.post(this.baseNumbersUrl + '/' + id, body);
   }
 
   registerUser(user: User) {
     return this.http.post(this.baseUserUrl, user);
   }
 
-  addNumber(id: string, number: Number) {
-    return this.http.patch(this.baseNumbersUrl + 'id', number);
+  addNumber(id: string, number: any) {
+    return this.http.patch(this.baseNumbersUrl + '/' + id, number);
   }
 
   addCard(card: Number) {

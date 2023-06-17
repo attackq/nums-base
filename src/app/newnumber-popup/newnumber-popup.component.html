@@ -1,0 +1,27 @@
+<form
+  action=""
+  class="register__form"
+  [formGroup]="addNumberForm"
+  (ngSubmit)="addNumber()"
+>
+  <mat-form-field>
+    <mat-label>Логин</mat-label>
+    <input
+      matInput
+      formControlName="username"
+      placeholder="Например, a.panasik"
+    />
+    <mat-hint align="start">Используй первую букву имени и фамилию </mat-hint>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Фамилия</mat-label>
+    <input matInput formControlName="lastName" />
+  </mat-form-field>
+  <div class="login__btns">
+    <button mat-raised-button color="accent" type="submit">
+      Зарегистрироваться
+    </button>
+    <button mat-raised-button color="warn" routerLink="">Назад</button>
+  </div>
+</form>

@@ -4,19 +4,21 @@
     <input
       matInput
       (keyup)="applyFilter($event)"
-      placeholder="Напр. 301561"
+      placeholder="Напр. Кронштейн"
       #input
     />
   </mat-form-field>
-  <button mat-raised-button (click)="addData()" class="selected__btn">
+  <button
+    mat-raised-button
+    (click)="addNumberToCard()"
+    color="primary"
+    class="selected__btn"
+  >
     Добавить
   </button>
-  <!-- <button mat-raised-button color="accent" (click)="navigate()">
-            Cбросить
-          </button> -->
 </div>
 
-<div class="mat-elevation-z8">
+<div class="mat-elevation-z8" *ngIf="isShowTable">
   <table mat-table [dataSource]="dataSource" matSort>
     <ng-container matColumnDef="id">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Номер</th>
@@ -76,16 +78,21 @@
     <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
 
     <tr class="mat-row" *matNoDataRow>
-      <td class="mat-cell" colspan="4" *ngIf="input.value.length !== 0">
-        Нет совпадений с "{{ input.value }}"
-      </td>
-      <h3 style="text-align: center" *ngIf="input.value.length === 0">
-        Please, register the first number
-      </h3>
+      <td class="mat-cell" colspan="4">Нет совпадений с "{{ input.value }}"</td>
     </tr>
   </table>
   <mat-paginator
     [pageSizeOptions]="[5, 10, 25, 100]"
     aria-label="Select page of users"
   ></mat-paginator>
+</div>
+
+<div class="selected__nofound" #notfound *ngIf="!isShowTable">
+  <p>Добавьте первый номер в группу!</p>
+  <div class="selected__img">
+    <img
+      src="/assets/img/adorable-kitty-looking-like-it-want-hunt.jpg"
+      alt=""
+    />
+  </div>
 </div>

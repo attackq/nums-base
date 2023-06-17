@@ -6,6 +6,8 @@ import { MatSort } from '@angular/material/sort';
 import { AuthService } from '../service/auth.service';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { switchMap, tap } from 'rxjs';
+import { MatDialog } from '@angular/material/dialog';
+import { NewnumberPopupComponent } from '../newnumber-popup/newnumber-popup.component';
 
 @Component({
   selector: 'app-selected-number',
@@ -28,24 +30,28 @@ export class SelectedNumberComponent implements OnInit {
   ];
   dataSource: MatTableDataSource<Number>;
   currentUser: User | null;
+  isShowTable: boolean = false;
 
   constructor(
     private authService: AuthService,
     private activatedRoute: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private dialog: MatDialog
   ) {}
 
   ngOnInit(): void {
     this.activatedRoute.params
       .pipe(
         switchMap((params: Params) => {
-          return this.authService.getNumberById(params['id']).pipe(
+          return this.authService.getCardById(params['id']).pipe(
             tap((number: any) => {
               const n = number.data.filter((i: any) => i.id !== 0);
-              // console.log(n);
-              // console.log(number.data);
-
               this.dataSource = new MatTableDataSource(n);
+              if (this.dataSource.filteredData.length > 0) {
+                this.isShowTable = true;
+              } else {
+                this.isShowTable = false;
+              }
               this.dataSource.paginator = this.paginator;
               this.dataSource.sort = this.sort;
             })
@@ -63,13 +69,7 @@ export class SelectedNumberComponent implements OnInit {
     }
   }
 
-  addData() {
-    this.dataSource.data.push();
-    this.table.renderRows();
-  }
-
-  removeData() {
-    this.dataSource.data.pop();
-    this.table.renderRows();
+  addNumberToCard() {
+    let dialog = this.dialog.open(NewnumberPopupComponent);
   }
 }

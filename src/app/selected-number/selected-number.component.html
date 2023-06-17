@@ -17,81 +17,88 @@
     Добавить
   </button>
 </div>
+<ng-container *ngIf="isShowTable; else notfound">
+  <div class="mat-elevation-z8">
+    <table mat-table [dataSource]="dataSource" matSort>
+      <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Номер</th>
+        <td mat-cell *matCellDef="let num">{{ num.id }}</td>
+      </ng-container>
 
-<div class="mat-elevation-z8" *ngIf="isShowTable">
-  <table mat-table [dataSource]="dataSource" matSort>
-    <ng-container matColumnDef="id">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Номер</th>
-      <td mat-cell *matCellDef="let num">{{ num.id }}</td>
-    </ng-container>
+      <ng-container matColumnDef="title">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Наименование</th>
+        <td mat-cell *matCellDef="let num">{{ num.title }}</td>
+      </ng-container>
 
-    <ng-container matColumnDef="title">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Наименование</th>
-      <td mat-cell *matCellDef="let num">{{ num.title }}</td>
-    </ng-container>
+      <ng-container matColumnDef="product">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Изделие</th>
+        <td mat-cell *matCellDef="let num">{{ num.product }}</td>
+      </ng-container>
 
-    <ng-container matColumnDef="product">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Изделие</th>
-      <td mat-cell *matCellDef="let num">{{ num.product }}</td>
-    </ng-container>
+      <ng-container matColumnDef="creator">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Фамилия</th>
+        <td mat-cell *matCellDef="let num">{{ num.creatorName }}</td>
+      </ng-container>
 
-    <ng-container matColumnDef="creator">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Фамилия</th>
-      <td mat-cell *matCellDef="let num">{{ num.creatorName }}</td>
-    </ng-container>
+      <ng-container matColumnDef="date">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Дата создания</th>
+        <td mat-cell *matCellDef="let num">
+          {{ num.createdAt | date : "short" }}
+        </td>
+      </ng-container>
 
-    <ng-container matColumnDef="date">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Дата создания</th>
-      <td mat-cell *matCellDef="let num">
-        {{ num.createdAt | date : "short" }}
-      </td>
-    </ng-container>
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Действия</th>
+        <td mat-cell *matCellDef="let num">
+          <button
+            mat-raised-button
+            color="accent"
+            style="margin-right: 15px"
+            (click)="openDeleteDialog()"
+            [disabled]="
+              currentUser?.role === 'stuff' &&
+              currentUser?.lastName !== num.creatorName
+            "
+          >
+            Изменить
+          </button>
+          <button
+            mat-raised-button
+            color="warn"
+            [disabled]="
+              currentUser?.role === 'stuff' &&
+              currentUser?.lastName !== num.creatorName
+            "
+            (click)="deleteNumber(num.id)"
+          >
+            Удалить
+          </button>
+        </td>
+      </ng-container>
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
 
-    <ng-container matColumnDef="actions">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Действия</th>
-      <td mat-cell *matCellDef="let user">
-        <button
-          mat-raised-button
-          color="accent"
-          style="margin-right: 15px"
-          [disabled]="
-            currentUser?.role === 'stuff' &&
-            currentUser?.lastName !== user.creatorName
-          "
-        >
-          Изменить
-        </button>
-        <button
-          mat-raised-button
-          color="warn"
-          [disabled]="
-            currentUser?.role === 'stuff' &&
-            currentUser?.lastName !== user.creatorName
-          "
-        >
-          Удалить
-        </button>
-      </td>
-    </ng-container>
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-
-    <tr class="mat-row" *matNoDataRow>
-      <td class="mat-cell" colspan="4">Нет совпадений с "{{ input.value }}"</td>
-    </tr>
-  </table>
-  <mat-paginator
-    [pageSizeOptions]="[10, 25, 100]"
-    aria-label="Select page of users"
-  ></mat-paginator>
-</div>
-
-<div class="selected__nofound" #notfound *ngIf="!isShowTable">
-  <p>Добавьте первый номер в группу!</p>
-  <div class="selected__img">
-    <img
-      src="/assets/img/adorable-kitty-looking-like-it-want-hunt.jpg"
-      alt=""
-    />
+      <tr class="mat-row" *matNoDataRow>
+        <td class="mat-cell" colspan="4">
+          Нет совпадений с "{{ input.value }}"
+        </td>
+      </tr>
+    </table>
+    <mat-paginator
+      [pageSizeOptions]="[10, 25, 100]"
+      aria-label="Select page of users"
+    ></mat-paginator>
   </div>
-</div>
+</ng-container>
+
+<ng-template #notfound>
+  <div class="selected__nofound" *ngIf="!isShowTable">
+    <p>Добавьте первый номер в группу!</p>
+    <div class="selected__img">
+      <img
+        src="/assets/img/adorable-kitty-looking-like-it-want-hunt.jpg"
+        alt=""
+      />
+    </div>
+  </div>
+</ng-template>

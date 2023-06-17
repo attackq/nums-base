@@ -5,10 +5,12 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { AuthService } from '../service/auth.service';
 import { ActivatedRoute, Params, Router } from '@angular/router';
-import { switchMap, tap } from 'rxjs';
+import { map, switchMap, tap } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 import { NewnumberPopupComponent } from '../newnumber-popup/newnumber-popup.component';
-import { Card, CardNumber } from '../service/number.interface';
+import { Card, CardNumber, NewNumber } from '../service/number.interface';
+import { ToastrService } from 'ngx-toastr';
+import { DeletePopupComponent } from '../delete-popup/delete-popup.component';
 
 @Component({
   selector: 'app-selected-number',
@@ -32,12 +34,16 @@ export class SelectedNumberComponent implements OnInit {
   dataSource: MatTableDataSource<CardNumber>;
   currentUser: User | null;
   isShowTable: boolean = false;
+  public cardData: CardNumber[];
+  public currentId: string;
+  public newData: NewNumber;
 
   constructor(
     private authService: AuthService,
     private activatedRoute: ActivatedRoute,
     private router: Router,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private toastr: ToastrService
   ) {}
 
   ngOnInit(): void {
@@ -50,10 +56,11 @@ export class SelectedNumberComponent implements OnInit {
   getDataSource() {
     this.activatedRoute.params
       .pipe(
+        tap((params: Params) => (this.currentId = params['id'])),
         switchMap((params: Params) => {
-          return this.authService.getCardById(params['id']).pipe(
+          return this.authService.getCardById(this.currentId).pipe(
             tap((card: Card) => {
-              const n = card.data.filter((i: CardNumber) => i.id !== 0);
+              const n = card.data.filter((i: CardNumber) => +i.id !== 0);
               this.dataSource = new MatTableDataSource(n);
               if (this.dataSource.filteredData.length > 0) {
                 this.isShowTable = true;
@@ -77,8 +84,59 @@ export class SelectedNumberComponent implements OnInit {
     }
   }
 
+  deleteNumber(id: string) {
+    this.authService.user$
+      .pipe(
+        tap((user: User | null) => (this.currentUser = user)),
+        switchMap(() => {
+          return this.authService.getCardById(this.currentId).pipe(
+            map((res: Card) => {
+              return res.data.map((i) => {
+                if (i.id === id) {
+                  const empty: CardNumber = {
+                    title: '',
+                    id: id,
+                    product: '',
+                    creatorName: '',
+                    createdAt: null,
+                  };
+                  return empty;
+                } else {
+                  return i;
+                }
+              });
+            }),
+            tap((res: CardNumber[]) => {
+              this.newData = {
+                data: res,
+              };
+            }),
+            switchMap(() => {
+              return this.authService.deleteNumber(
+                this.currentId,
+                this.newData
+              );
+            })
+          );
+        })
+      )
+      .subscribe(() => {
+        this.toastr.success('Номер удален!');
+        this.getDataSource();
+      });
+  }
+
   addNumberToCard() {
     let dialogRef = this.dialog.open(NewnumberPopupComponent);
     dialogRef.afterClosed().subscribe(() => this.getDataSource());
+  }
+
+  openDeleteDialog() {
+    this.dialog.open(DeletePopupComponent, {
+      data: {
+        text: 'Удаление номера',
+        id: 'idi',
+      },
+    });
   }
 }

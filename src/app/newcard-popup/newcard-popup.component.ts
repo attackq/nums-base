@@ -26,7 +26,7 @@ export class NewcardPopupComponent {
       data: [
         {
           title: '',
-          id: 0,
+          id: '0',
           product: '',
           creatorName: '',
           createdAt: 0,

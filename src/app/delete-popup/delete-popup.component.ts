@@ -10,7 +10,8 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class DeletePopupComponent {
   constructor(
-    @Inject(MAT_DIALOG_DATA) public data: { userId: string; username: string },
+    @Inject(MAT_DIALOG_DATA)
+    public data: { userId: string; username: string; text: string },
     private authService: AuthService,
     private toastr: ToastrService
   ) {}

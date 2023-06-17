@@ -72,4 +72,8 @@ export class AuthService {
   addNumberToCard(id: string, number: NewNumber) {
     return this.http.patch(this.baseNumbersUrl + '/' + id, number);
   }
+
+  deleteNumber(id: string, number: NewNumber) {
+    return this.http.patch(this.baseNumbersUrl + '/' + id, number);
+  }
 }

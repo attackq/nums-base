@@ -13,10 +13,10 @@
 
 export interface CardNumber {
   title: string;
-  id: number;
+  id: string;
   product: string;
   creatorName: string | undefined;
-  createdAt: number;
+  createdAt: number | null;
 }
 
 export interface Card {

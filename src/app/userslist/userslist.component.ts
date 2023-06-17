@@ -75,7 +75,7 @@ export class UserslistComponent implements OnInit {
 
   openDeleteDialog(id: string, username: string) {
     let dialogRef = this.dialog.open(DeletePopupComponent, {
-      data: { userId: id, username: username },
+      data: { userId: id, username: username, text: 'Удаление пользователя' },
     });
     dialogRef
       .afterClosed()

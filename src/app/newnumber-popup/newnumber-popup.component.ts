@@ -68,7 +68,7 @@ export class NewnumberPopupComponent implements OnInit {
     if (this.addNumberForm.valid) {
       const number: CardNumber = {
         title: this.addNumberForm.value.title,
-        id: this.lastNumberId,
+        id: this.lastNumberId.toString(),
         product: this.addNumberForm.value.product,
         creatorName: this.addNumberForm.value.creator,
         createdAt: Date.now(),

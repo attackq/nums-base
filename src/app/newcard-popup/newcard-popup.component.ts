@@ -2,9 +2,9 @@ import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { AuthService } from '../service/auth.service';
 import { ToastrService } from 'ngx-toastr';
-import { Number } from '../service/number.interface';
 import { ActivatedRoute, Router } from '@angular/router';
 import { catchError, filter, map, switchMap, tap, throwError } from 'rxjs';
+import { Card } from '../service/number.interface';
 
 @Component({
   selector: 'app-newcard-popup',
@@ -21,7 +21,7 @@ export class NewcardPopupComponent {
   ) {}
 
   addNumber() {
-    const newCard: Number = {
+    const newCard: Card = {
       id: this.data.cardId,
       data: [
         {
@@ -36,8 +36,8 @@ export class NewcardPopupComponent {
     this.authService
       .getAllNumbers()
       .pipe(
-        map((nums: Number[]) => {
-          nums.map((i: Number) => {
+        map((nums: Card[]) => {
+          nums.map((i: Card) => {
             if (i.id.includes(this.data.cardId)) {
               this.toastr.error('Группа уже сушествует!');
             }

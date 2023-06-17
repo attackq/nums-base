@@ -13,19 +13,20 @@ import { User } from '../service/user.interface';
 })
 export class LoginComponent implements OnInit {
   public currentUser: User;
-  public loginForm: FormGroup = this.builder.group({
-    username: this.builder.control('', Validators.required),
-    password: this.builder.control('', Validators.required),
-  });
+
   public showPassword: boolean = false;
 
   constructor(
-    private builder: FormBuilder,
+    private fb: FormBuilder,
     private authService: AuthService,
     private toastr: ToastrService,
     private router: Router
   ) {}
 
+  public loginForm: FormGroup = this.fb.group({
+    username: this.fb.control('', Validators.required),
+    password: this.fb.control('', Validators.required),
+  });
   ngOnInit(): void {}
 
   toggleShowPassword(): void {

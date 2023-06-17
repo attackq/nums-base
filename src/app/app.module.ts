@@ -60,6 +60,7 @@ import { NewnumberPopupComponent } from './newnumber-popup/newnumber-popup.compo
     MatPaginatorModule,
     ToastrModule.forRoot({
       positionClass: 'toast-bottom-right',
+      maxOpened: 4,
     }),
   ],
   providers: [{ provide: LOCALE_ID, useValue: 'ru' }],

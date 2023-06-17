@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { EditedUser, User } from './user.interface';
 import { Observable, ReplaySubject, Subject, map, tap } from 'rxjs';
-import { EditedCardData, Number } from './number.interface';
+import { Card, CardNumber, NewNumber } from './number.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -29,12 +29,10 @@ export class AuthService {
       .subscribe();
   }
 
+  // users
+
   getAllUsers(): Observable<User[]> {
     return this.http.get<User[]>(this.baseUserUrl);
-  }
-
-  getAllNumbers(): Observable<Number[]> {
-    return this.http.get<Number[]>(this.baseNumbersUrl);
   }
 
   getUserByUsername(username: string): Observable<User[]> {
@@ -45,31 +43,8 @@ export class AuthService {
     return this.http.get<User>(this.baseUserUrl + '/' + id);
   }
 
-  getCardById(id: string): Observable<Number> {
-    return this.http.get<Number>(this.baseNumbersUrl + '/' + id);
-  }
-
-  getCardByIdData(id: string): Observable<any> {
-    return this.http.get<any>(this.baseNumbersUrl + '/' + id);
-  }
-
-  postNewNumberToCard(id: string, body: EditedCardData) {
-    return this.http.patch(this.baseNumbersUrl + '/' + id, body);
-  }
-  postToCard(id: string, body: EditedCardData) {
-    return this.http.post(this.baseNumbersUrl + '/' + id, body);
-  }
-
   registerUser(user: User) {
     return this.http.post(this.baseUserUrl, user);
-  }
-
-  addNumber(id: string, number: any) {
-    return this.http.patch(this.baseNumbersUrl + '/' + id, number);
-  }
-
-  addCard(card: Number) {
-    return this.http.post(this.baseNumbersUrl, card);
   }
 
   editUser(id: string, body: EditedUser) {
@@ -78,5 +53,23 @@ export class AuthService {
 
   deleteUser(id: string) {
     return this.http.delete(this.baseUserUrl + '/' + id);
+  }
+
+  // cards
+
+  getAllNumbers(): Observable<Card[]> {
+    return this.http.get<Card[]>(this.baseNumbersUrl);
+  }
+
+  getCardById(id: string): Observable<Card> {
+    return this.http.get<Card>(this.baseNumbersUrl + '/' + id);
+  }
+
+  addCard(card: Card) {
+    return this.http.post(this.baseNumbersUrl, card);
+  }
+
+  addNumberToCard(id: string, number: NewNumber) {
+    return this.http.patch(this.baseNumbersUrl + '/' + id, number);
   }
 }

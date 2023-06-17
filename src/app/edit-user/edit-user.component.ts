@@ -15,14 +15,14 @@ export class EditUserComponent {
   constructor(
     @Inject(MAT_DIALOG_DATA)
     public data: { userId: string; username: string; lastname: string },
-    private builder: FormBuilder,
+    private fb: FormBuilder,
     private authService: AuthService,
     private toastr: ToastrService
   ) {}
 
-  public editForm: FormGroup = this.builder.group({
-    username: this.builder.control(this.data.username, Validators.required),
-    lastName: this.builder.control(this.data.lastname, Validators.required),
+  public editForm: FormGroup = this.fb.group({
+    username: this.fb.control(this.data.username, Validators.required),
+    lastName: this.fb.control(this.data.lastname, Validators.required),
   });
 
   editUser() {

@@ -4,24 +4,33 @@
   [formGroup]="addNumberForm"
   (ngSubmit)="addNumber()"
 >
+  <mat-form-field class="id">
+    <mat-label>Ваш номер</mat-label>
+    <input matInput formControlName="id" readonly="true" />
+  </mat-form-field>
+
   <mat-form-field>
-    <mat-label>Логин</mat-label>
+    <mat-label>Наименование</mat-label>
     <input
       matInput
-      formControlName="username"
-      placeholder="Например, a.panasik"
+      formControlName="title"
+      placeholder="Например, кронштейн"
+      cdkFocusInitial
     />
-    <mat-hint align="start">Используй первую букву имени и фамилию </mat-hint>
+    <!-- <mat-hint align="start">Используй первую букву имени и фамилию </mat-hint> -->
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Изделие</mat-label>
+    <input matInput formControlName="product" />
   </mat-form-field>
 
   <mat-form-field>
     <mat-label>Фамилия</mat-label>
-    <input matInput formControlName="lastName" />
+    <input matInput formControlName="creator" readonly="true" />
   </mat-form-field>
   <div class="login__btns">
-    <button mat-raised-button color="accent" type="submit">
-      Зарегистрироваться
-    </button>
-    <button mat-raised-button color="warn" routerLink="">Назад</button>
+    <button mat-raised-button color="accent" type="submit">Добавить</button>
+    <button mat-raised-button color="warn" mat-dialog-close>Назад</button>
   </div>
 </form>

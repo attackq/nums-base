@@ -56,7 +56,7 @@
           style="margin-right: 15px"
           [disabled]="
             currentUser?.role === 'stuff' &&
-            currentUser?.username !== user.username
+            currentUser?.lastName !== user.creatorName
           "
         >
           Изменить
@@ -66,14 +66,13 @@
           color="warn"
           [disabled]="
             currentUser?.role === 'stuff' &&
-            currentUser?.username !== user.username
+            currentUser?.lastName !== user.creatorName
           "
         >
           Удалить
         </button>
       </td>
     </ng-container>
-
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
 
@@ -82,7 +81,7 @@
     </tr>
   </table>
   <mat-paginator
-    [pageSizeOptions]="[5, 10, 25, 100]"
+    [pageSizeOptions]="[10, 25, 100]"
     aria-label="Select page of users"
   ></mat-paginator>
 </div>

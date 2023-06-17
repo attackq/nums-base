@@ -8,6 +8,7 @@ import { ActivatedRoute, Params, Router } from '@angular/router';
 import { switchMap, tap } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 import { NewnumberPopupComponent } from '../newnumber-popup/newnumber-popup.component';
+import { Card, CardNumber } from '../service/number.interface';
 
 @Component({
   selector: 'app-selected-number',
@@ -18,7 +19,7 @@ import { NewnumberPopupComponent } from '../newnumber-popup/newnumber-popup.comp
 export class SelectedNumberComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
-  @ViewChild(MatTable) table: MatTable<Number[]>;
+  @ViewChild(MatTable) table: MatTable<CardNumber>;
 
   displayedColumns: string[] = [
     'id',
@@ -28,7 +29,7 @@ export class SelectedNumberComponent implements OnInit {
     'date',
     'actions',
   ];
-  dataSource: MatTableDataSource<Number>;
+  dataSource: MatTableDataSource<CardNumber>;
   currentUser: User | null;
   isShowTable: boolean = false;
 
@@ -40,12 +41,19 @@ export class SelectedNumberComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.authService.user$.subscribe((res) => {
+      this.currentUser = res;
+    });
+    this.getDataSource();
+  }
+
+  getDataSource() {
     this.activatedRoute.params
       .pipe(
         switchMap((params: Params) => {
           return this.authService.getCardById(params['id']).pipe(
-            tap((number: any) => {
-              const n = number.data.filter((i: any) => i.id !== 0);
+            tap((card: Card) => {
+              const n = card.data.filter((i: CardNumber) => i.id !== 0);
               this.dataSource = new MatTableDataSource(n);
               if (this.dataSource.filteredData.length > 0) {
                 this.isShowTable = true;
@@ -70,6 +78,7 @@ export class SelectedNumberComponent implements OnInit {
   }
 
   addNumberToCard() {
-    let dialog = this.dialog.open(NewnumberPopupComponent);
+    let dialogRef = this.dialog.open(NewnumberPopupComponent);
+    dialogRef.afterClosed().subscribe(() => this.getDataSource());
   }
 }

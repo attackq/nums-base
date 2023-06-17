@@ -17,7 +17,7 @@ export class RegisterComponent implements OnInit {
   public showPassword: boolean = false;
 
   constructor(
-    private builder: FormBuilder,
+    private fb: FormBuilder,
     private authService: AuthService,
     private router: Router,
     private toastr: ToastrService
@@ -31,10 +31,10 @@ export class RegisterComponent implements OnInit {
     });
   }
 
-  registerForm: FormGroup = this.builder.group({
-    username: this.builder.control('', Validators.required),
-    password: this.builder.control('', Validators.required),
-    lastName: this.builder.control('', Validators.required),
+  public registerForm: FormGroup = this.fb.group({
+    username: this.fb.control('', Validators.required),
+    password: this.fb.control('', Validators.required),
+    lastName: this.fb.control('', Validators.required),
   });
 
   toggleShowPassword(): void {

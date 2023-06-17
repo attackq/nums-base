@@ -18,12 +18,12 @@
     <mat-icon>share</mat-icon>
   </button>
   <div style="margin-right: 20px; cursor: pointer">
-    {{ loggedUser?.username }}
+    {{ currentUser?.username }}
   </div>
   <button
     mat-raised-button
     color="warn"
-    *ngIf="loggedUser?.username"
+    *ngIf="currentUser?.username"
     (click)="logout()"
   >
     Выйти

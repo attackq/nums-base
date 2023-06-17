@@ -5,12 +5,12 @@ import { MatTableDataSource } from '@angular/material/table';
 import { User } from '../service/user.interface';
 import { AuthService } from '../service/auth.service';
 import { Observable, map, startWith, switchMap, tap } from 'rxjs';
-import { Number } from '../service/number.interface';
 import { FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { MatDialog } from '@angular/material/dialog';
 import { NewcardPopupComponent } from '../newcard-popup/newcard-popup.component';
+import { Card } from '../service/number.interface';
 
 @Component({
   selector: 'app-numbers-list',
@@ -38,18 +38,18 @@ export class NumbersListComponent implements OnInit {
   ngOnInit(): void {
     this.authService.user$
       .pipe(
-        tap((val: User | null) => {
-          this.currentUser = val;
+        tap((res: User | null) => {
+          this.currentUser = res;
         }),
         switchMap(() =>
           this.authService.isActiiveBtn$.pipe(
-            tap((res) => (this.isActive = res))
+            tap((res: boolean) => (this.isActive = res))
           )
         ),
         switchMap(() => {
           return this.authService.getAllNumbers().pipe(
-            tap((nums: Number[]) => {
-              nums.map((num: Number) => this.options.push(num.id));
+            tap((nums: Card[]) => {
+              nums.map((num: Card) => this.options.push(num.id));
             })
           );
         })

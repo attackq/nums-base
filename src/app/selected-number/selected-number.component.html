@@ -54,7 +54,6 @@
             mat-raised-button
             color="accent"
             style="margin-right: 15px"
-            (click)="openDeleteDialog()"
             [disabled]="
               currentUser?.role === 'stuff' &&
               currentUser?.lastName !== num.creatorName
@@ -69,7 +68,7 @@
               currentUser?.role === 'stuff' &&
               currentUser?.lastName !== num.creatorName
             "
-            (click)="deleteNumber(num.id)"
+            (click)="openDeleteNumberDialog(num.id)"
           >
             Удалить
           </button>

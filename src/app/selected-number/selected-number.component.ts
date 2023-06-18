@@ -11,6 +11,7 @@ import { NewnumberPopupComponent } from '../newnumber-popup/newnumber-popup.comp
 import { Card, CardNumber, NewNumber } from '../service/number.interface';
 import { ToastrService } from 'ngx-toastr';
 import { DeletePopupComponent } from '../delete-popup/delete-popup.component';
+import { ApprovePopupComponent } from '../approve-popup/approve-popup.component';
 
 @Component({
   selector: 'app-selected-number',
@@ -35,7 +36,7 @@ export class SelectedNumberComponent implements OnInit {
   currentUser: User | null;
   isShowTable: boolean = false;
   public cardData: CardNumber[];
-  public currentId: string;
+  public currentCardId: string;
   public newData: NewNumber;
 
   constructor(
@@ -56,9 +57,9 @@ export class SelectedNumberComponent implements OnInit {
   getDataSource() {
     this.activatedRoute.params
       .pipe(
-        tap((params: Params) => (this.currentId = params['id'])),
+        tap((params: Params) => (this.currentCardId = params['id'])),
         switchMap((params: Params) => {
-          return this.authService.getCardById(this.currentId).pipe(
+          return this.authService.getCardById(this.currentCardId).pipe(
             tap((card: Card) => {
               const n = card.data.filter((i: CardNumber) => +i.id !== 0);
               this.dataSource = new MatTableDataSource(n);
@@ -84,59 +85,33 @@ export class SelectedNumberComponent implements OnInit {
     }
   }
 
-  deleteNumber(id: string) {
-    this.authService.user$
-      .pipe(
-        tap((user: User | null) => (this.currentUser = user)),
-        switchMap(() => {
-          return this.authService.getCardById(this.currentId).pipe(
-            map((res: Card) => {
-              return res.data.map((i) => {
-                if (i.id === id) {
-                  const empty: CardNumber = {
-                    title: '',
-                    id: id,
-                    product: '',
-                    creatorName: '',
-                    createdAt: null,
-                  };
-                  return empty;
-                } else {
-                  return i;
-                }
-              });
-            }),
-            tap((res: CardNumber[]) => {
-              this.newData = {
-                data: res,
-              };
-            }),
-            switchMap(() => {
-              return this.authService.deleteNumber(
-                this.currentId,
-                this.newData
-              );
-            })
-          );
-        })
-      )
-      .subscribe(() => {
-        this.toastr.success('Номер удален!');
-        this.getDataSource();
-      });
-  }
-
   addNumberToCard() {
     let dialogRef = this.dialog.open(NewnumberPopupComponent);
     dialogRef.afterClosed().subscribe(() => this.getDataSource());
   }
 
-  openDeleteDialog() {
-    this.dialog.open(DeletePopupComponent, {
+  openDeleteNumberDialog(id: string) {
+    let newNumId;
+    switch (id.length) {
+      case 1:
+        newNumId = '00' + id;
+        break;
+      case 2:
+        newNumId = '0' + id;
+        break;
+      default:
+        newNumId = id;
+    }
+    let dialogRef = this.dialog.open(ApprovePopupComponent, {
       data: {
-        text: 'Удаление номера',
-        id: 'idi',
+        currentCardId: this.currentCardId,
+        titleText: 'Удаление номера',
+        text: 'номер',
+        id: id,
+        fn: 'number',
+        username: this.currentCardId + '.' + newNumId,
       },
     });
+    dialogRef.afterClosed().subscribe(() => this.getDataSource());
   }
 }

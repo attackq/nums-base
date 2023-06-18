@@ -9,6 +9,7 @@ import { ToastrService } from 'ngx-toastr';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { DeletePopupComponent } from '../delete-popup/delete-popup.component';
 import { EditUserComponent } from '../edit-user/edit-user.component';
+import { ApprovePopupComponent } from '../approve-popup/approve-popup.component';
 
 export interface UserData {
   id: string;
@@ -73,9 +74,25 @@ export class UserslistComponent implements OnInit {
     }
   }
 
-  openDeleteDialog(id: string, username: string) {
-    let dialogRef = this.dialog.open(DeletePopupComponent, {
-      data: { userId: id, username: username, text: 'Удаление пользователя' },
+  // openDeleteDialog(id: string, username: string) {
+  //   let dialogRef = this.dialog.open(DeletePopupComponent, {
+  //     data: { userId: id, username: username, text: 'Удаление пользователя' },
+  //   });
+  //   dialogRef
+  //     .afterClosed()
+  //     .pipe(switchMap(() => this.refreshData()))
+  //     .subscribe();
+  // }
+
+  openDeleteUserDialog(id: string, username: string) {
+    let dialogRef = this.dialog.open(ApprovePopupComponent, {
+      data: {
+        userId: id,
+        username: username,
+        titleText: 'Удаление пользователя',
+        text: 'пользователя',
+        fn: 'user',
+      },
     });
     dialogRef
       .afterClosed()

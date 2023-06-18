@@ -27,6 +27,7 @@ import { SelectedNumberComponent } from './selected-number/selected-number.compo
 import { NewcardPopupComponent } from './newcard-popup/newcard-popup.component';
 import { MatCardModule } from '@angular/material/card';
 import { NewnumberPopupComponent } from './newnumber-popup/newnumber-popup.component';
+import { ApprovePopupComponent } from './approve-popup/approve-popup.component';
 
 @NgModule({
   declarations: [
@@ -40,6 +41,7 @@ import { NewnumberPopupComponent } from './newnumber-popup/newnumber-popup.compo
     SelectedNumberComponent,
     NewcardPopupComponent,
     NewnumberPopupComponent,
+    ApprovePopupComponent,
   ],
   imports: [
     BrowserModule,

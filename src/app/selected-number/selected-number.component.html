@@ -54,9 +54,11 @@
             mat-raised-button
             color="accent"
             style="margin-right: 15px"
+            (click)="editNumber(num.id)"
             [disabled]="
               currentUser?.role === 'stuff' &&
-              currentUser?.lastName !== num.creatorName
+              currentUser?.lastName !== num.creatorName &&
+              num.createdAt !== null
             "
           >
             Изменить

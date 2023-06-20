@@ -23,7 +23,7 @@ export interface UserData {
   templateUrl: './userslist.component.html',
   styleUrls: ['./userslist.component.css'],
 })
-export class UserslistComponent implements OnInit {
+export class UserslistComponent implements OnInit, AfterViewInit {
   displayedColumns: string[] = [
     'id',
     'username',
@@ -42,6 +42,7 @@ export class UserslistComponent implements OnInit {
     private toastr: ToastrService,
     private dialog: MatDialog
   ) {}
+  ngAfterViewInit(): void {}
 
   ngOnInit(): void {
     this.authService.user$

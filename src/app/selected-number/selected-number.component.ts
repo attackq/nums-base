@@ -1,4 +1,10 @@
-import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  OnInit,
+  ViewChild,
+  ViewEncapsulation,
+} from '@angular/core';
 import { MatTable, MatTableDataSource } from '@angular/material/table';
 import { User } from '../service/user.interface';
 import { MatPaginator } from '@angular/material/paginator';
@@ -19,7 +25,7 @@ import { ApprovePopupComponent } from '../approve-popup/approve-popup.component'
   styleUrls: ['./selected-number.component.css'],
   encapsulation: ViewEncapsulation.None,
 })
-export class SelectedNumberComponent implements OnInit {
+export class SelectedNumberComponent implements OnInit, AfterViewInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatTable) table: MatTable<CardNumber>;
@@ -38,6 +44,7 @@ export class SelectedNumberComponent implements OnInit {
   public cardData: CardNumber[];
   public currentCardId: string;
   public newData: NewNumber;
+  public newNumberId: string;
 
   constructor(
     private authService: AuthService,
@@ -46,6 +53,7 @@ export class SelectedNumberComponent implements OnInit {
     private dialog: MatDialog,
     private toastr: ToastrService
   ) {}
+  ngAfterViewInit(): void {}
 
   ngOnInit(): void {
     this.authService.user$.subscribe((res) => {
@@ -62,6 +70,7 @@ export class SelectedNumberComponent implements OnInit {
           return this.authService.getCardById(this.currentCardId).pipe(
             tap((card: Card) => {
               const n = card.data.filter((i: CardNumber) => +i.id !== 0);
+              this.newNumberId = card.data.length.toString();
               this.dataSource = new MatTableDataSource(n);
               if (this.dataSource.filteredData.length > 0) {
                 this.isShowTable = true;
@@ -86,7 +95,19 @@ export class SelectedNumberComponent implements OnInit {
   }
 
   addNumberToCard() {
-    let dialogRef = this.dialog.open(NewnumberPopupComponent);
+    let dialogRef = this.dialog.open(NewnumberPopupComponent, {
+      data: {
+        id: this.newNumberId,
+        fn: 'add',
+      },
+    });
+    dialogRef.afterClosed().subscribe(() => this.getDataSource());
+  }
+
+  editNumber(id: string) {
+    let dialogRef = this.dialog.open(NewnumberPopupComponent, {
+      data: { id: id, fn: 'edit' },
+    });
     dialogRef.afterClosed().subscribe(() => this.getDataSource());
   }
 

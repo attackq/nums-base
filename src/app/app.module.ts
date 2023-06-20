@@ -28,6 +28,8 @@ import { NewcardPopupComponent } from './newcard-popup/newcard-popup.component';
 import { MatCardModule } from '@angular/material/card';
 import { NewnumberPopupComponent } from './newnumber-popup/newnumber-popup.component';
 import { ApprovePopupComponent } from './approve-popup/approve-popup.component';
+import { MatSortModule } from '@angular/material/sort';
+import { FormatIdPipe } from './service/formatid.pipe';
 
 @NgModule({
   declarations: [
@@ -42,9 +44,11 @@ import { ApprovePopupComponent } from './approve-popup/approve-popup.component';
     NewcardPopupComponent,
     NewnumberPopupComponent,
     ApprovePopupComponent,
+    FormatIdPipe,
   ],
   imports: [
     BrowserModule,
+    MatSortModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     MatFormFieldModule,

@@ -69,11 +69,4 @@ export class ApprovePopupComponent {
         this.toastr.success('Номер удален!');
       });
   }
-
-  user() {
-    console.log('user');
-  }
-  number() {
-    console.log('number');
-  }
 }

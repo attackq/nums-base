@@ -1,33 +1,29 @@
 <mat-toolbar>
-  <span><a routerLink="">Картотека</a></span>
-  <span><a routerLink="users">Пользователи</a></span>
-  <span><a routerLink="numbers">Карточки</a></span>
-  <span class="example-spacer"></span>
-  <button
-    mat-icon-button
-    class="example-icon favorite-icon"
-    aria-label="Example icon-button with heart icon"
-  >
-    <mat-icon>favorite</mat-icon>
-  </button>
-  <button
-    mat-icon-button
-    class="example-icon"
-    aria-label="Example icon-button with share icon"
-  >
-    <mat-icon>share</mat-icon>
-  </button>
-  <div style="margin-right: 20px; cursor: pointer">
-    {{ currentUser?.username }}
+  <div class="toolbar">
+    <div class="toolbar__logo">
+      <a routerLink="" class="toolbar__title">Картотека</a>
+      <div class="toolbar__links" *ngIf="currentUser">
+        <a routerLink="numbers">Карточки</a>
+        <a *ngIf="currentUser?.role === 'admin'" routerLink="users"
+          >Пользователи</a
+        >
+      </div>
+    </div>
+
+    <div class="toolbar__info">
+      <div style="margin-right: 20px; cursor: pointer">
+        {{ currentUser?.username }}
+      </div>
+      <button
+        mat-raised-button
+        color="warn"
+        *ngIf="currentUser?.username"
+        (click)="logout()"
+      >
+        Выйти
+      </button>
+    </div>
   </div>
-  <button
-    mat-raised-button
-    color="warn"
-    *ngIf="currentUser?.username"
-    (click)="logout()"
-  >
-    Выйти
-  </button>
 </mat-toolbar>
 
 <div class="container">

@@ -2,7 +2,7 @@
   action=""
   class="register__form"
   [formGroup]="addNumberForm"
-  (ngSubmit)="addNumber()"
+  (ngSubmit)="data.fn === 'add' ? addNumber() : editNumber()"
 >
   <mat-form-field class="id">
     <mat-label>Ваш номер</mat-label>
@@ -30,7 +30,9 @@
     <input matInput formControlName="creator" readonly="true" />
   </mat-form-field>
   <div class="login__btns">
-    <button mat-raised-button color="accent" type="submit">Добавить</button>
+    <button mat-raised-button color="accent" type="submit">
+      {{ data.fn === "add" ? "Добавить" : "Изменить" }}
+    </button>
     <button mat-raised-button color="warn" mat-dialog-close>Назад</button>
   </div>
 </form>

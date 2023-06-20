@@ -17,7 +17,10 @@ import { ToastrModule } from 'ngx-toastr';
 import { LoginComponent } from './login/login.component';
 import { UserslistComponent } from './userslist/userslist.component';
 import { MatTableModule } from '@angular/material/table';
-import { MatPaginatorModule } from '@angular/material/paginator';
+import {
+  MatPaginatorIntl,
+  MatPaginatorModule,
+} from '@angular/material/paginator';
 import { DeletePopupComponent } from './delete-popup/delete-popup.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
@@ -30,6 +33,7 @@ import { NewnumberPopupComponent } from './newnumber-popup/newnumber-popup.compo
 import { ApprovePopupComponent } from './approve-popup/approve-popup.component';
 import { MatSortModule } from '@angular/material/sort';
 import { FormatIdPipe } from './service/formatid.pipe';
+import { CustomPaginator } from './service/CustomPaginatorConfiguration';
 
 @NgModule({
   declarations: [
@@ -69,7 +73,10 @@ import { FormatIdPipe } from './service/formatid.pipe';
       maxOpened: 4,
     }),
   ],
-  providers: [{ provide: LOCALE_ID, useValue: 'ru' }],
+  providers: [
+    { provide: LOCALE_ID, useValue: 'ru' },
+    { provide: MatPaginatorIntl, useValue: CustomPaginator() },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

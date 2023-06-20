@@ -42,7 +42,10 @@ export class NewnumberPopupComponent implements OnInit {
 
   addNumberForm: FormGroup = this.fb.group({
     id: this.fb.control('', Validators.required),
-    title: this.fb.control('', Validators.required),
+    title: this.fb.control('', [
+      Validators.required,
+      Validators.pattern('^[\u0400-\u04FF]+$'),
+    ]),
     product: this.fb.control('', Validators.required),
     creator: this.fb.control('', Validators.required),
   });

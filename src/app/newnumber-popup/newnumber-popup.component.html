@@ -22,8 +22,17 @@
 
   <mat-form-field>
     <mat-label>Изделие</mat-label>
-    <input matInput formControlName="product" />
+    <mat-select [(ngModel)]="selectedValue" formControlName="product">
+      <mat-option *ngFor="let product of products" [value]="product.viewValue">
+        {{ product.viewValue }}
+      </mat-option>
+    </mat-select>
   </mat-form-field>
+
+  <!-- <mat-form-field>
+    <mat-label>Изделие</mat-label>
+    <input matInput formControlName="product" />
+  </mat-form-field> -->
 
   <mat-form-field>
     <mat-label>Фамилия</mat-label>

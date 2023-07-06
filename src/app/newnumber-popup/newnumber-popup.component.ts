@@ -13,6 +13,10 @@ import { User } from '../service/user.interface';
 import { ToastrService } from 'ngx-toastr';
 import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 
+interface Product {
+  viewValue: string;
+}
+
 @Component({
   selector: 'app-newnumber-popup',
   templateUrl: './newnumber-popup.component.html',
@@ -25,6 +29,20 @@ export class NewnumberPopupComponent implements OnInit {
   public cardData: CardNumber[];
   public newData: NewNumber;
   public newId: number;
+
+  selectedValue: string;
+
+  products: Product[] = [
+    { viewValue: 'Восток-3Д' },
+    { viewValue: 'Восток-2Д' },
+    { viewValue: 'Восток-2Д-Э' },
+    { viewValue: 'Роса' },
+    { viewValue: 'Роса-РБ-М' },
+    { viewValue: 'Гроза-С' },
+    { viewValue: 'Гроза-Р' },
+    { viewValue: 'Небосклон' },
+    { viewValue: 'Панда' },
+  ];
 
   constructor(
     @Inject(MAT_DIALOG_DATA)

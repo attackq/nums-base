@@ -19,9 +19,17 @@
 </div>
 <ng-container *ngIf="isShowTable; else notfound">
   <div class="mat-elevation-z8">
-    <table mat-table [dataSource]="dataSource" matSort>
+    <table
+      mat-table
+      [dataSource]="dataSource"
+      matSort
+      matSortActive="id"
+      matSortDirection="desc"
+      matSortDisableClear
+    >
+      >
       <ng-container matColumnDef="id">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>Номер</th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header="id">Номер</th>
         <td mat-cell *matCellDef="let num">{{ num.id }}</td>
       </ng-container>
 
@@ -67,8 +75,9 @@
             mat-raised-button
             color="warn"
             [disabled]="
-              currentUser?.role === 'stuff' &&
-              currentUser?.lastName !== num.creatorName
+              (currentUser?.role === 'stuff' &&
+                currentUser?.lastName !== num.creatorName) ||
+              num.title == ''
             "
             (click)="openDeleteNumberDialog(num.id)"
           >

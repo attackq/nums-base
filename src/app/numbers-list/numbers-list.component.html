@@ -9,7 +9,9 @@
       [formControl]="myControl"
       [matAutocomplete]="auto"
       maxlength="6"
+      #cardNumber
     />
+    <mat-hint align="end">{{ cardNumber.value.length }} / 6</mat-hint>
     <mat-autocomplete #auto="matAutocomplete">
       <mat-option
         *ngFor="let option of filteredOptions | async"

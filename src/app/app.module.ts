@@ -11,7 +11,7 @@ import { RegisterComponent } from './register/register.component';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { ToastrModule } from 'ngx-toastr';
 import { LoginComponent } from './login/login.component';
@@ -56,6 +56,7 @@ import { CustomPaginator } from './service/CustomPaginatorConfiguration';
     AppRoutingModule,
     BrowserAnimationsModule,
     MatFormFieldModule,
+    FormsModule,
     MatSelectModule,
     MatInputModule,
     MatCardModule,

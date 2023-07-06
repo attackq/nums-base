@@ -8,7 +8,7 @@ import {
 import { MatTable, MatTableDataSource } from '@angular/material/table';
 import { User } from '../service/user.interface';
 import { MatPaginator } from '@angular/material/paginator';
-import { MatSort } from '@angular/material/sort';
+import { MatSort, MatSortable } from '@angular/material/sort';
 import { AuthService } from '../service/auth.service';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { map, switchMap, tap } from 'rxjs';
@@ -27,7 +27,7 @@ import { ApprovePopupComponent } from '../approve-popup/approve-popup.component'
 })
 export class SelectedNumberComponent implements OnInit, AfterViewInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
-  @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatSort) matsort: MatSort;
   @ViewChild(MatTable) table: MatTable<CardNumber>;
 
   displayedColumns: string[] = [
@@ -78,7 +78,7 @@ export class SelectedNumberComponent implements OnInit, AfterViewInit {
                 this.isShowTable = false;
               }
               this.dataSource.paginator = this.paginator;
-              this.dataSource.sort = this.sort;
+              this.dataSource.sort = this.matsort;
             })
           );
         })

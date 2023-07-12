@@ -5,6 +5,7 @@ import { ToastrService } from 'ngx-toastr';
 import { tap } from 'rxjs';
 import { Router } from '@angular/router';
 import { User } from '../service/user.interface';
+import { ReCaptchaV3Service } from 'ng-recaptcha';
 
 @Component({
   selector: 'app-login',
@@ -13,7 +14,7 @@ import { User } from '../service/user.interface';
 })
 export class LoginComponent implements OnInit {
   public currentUser: User;
-
+  captcha: string;
   public showPassword: boolean = false;
 
   constructor(
@@ -31,6 +32,10 @@ export class LoginComponent implements OnInit {
 
   toggleShowPassword(): void {
     this.showPassword = !this.showPassword;
+  }
+
+  resolved(captchaResponse: string) {
+    console.log(`Resolved captcha with response: ${captchaResponse}`);
   }
 
   loginUser() {

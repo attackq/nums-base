@@ -33,7 +33,12 @@
     <input matInput formControlName="lastName" />
   </mat-form-field>
   <div class="login__btns">
-    <button mat-raised-button color="accent" type="submit">
+    <button
+      mat-raised-button
+      color="accent"
+      type="submit"
+      (click)="executeImportantAction()"
+    >
       Зарегистрироваться
     </button>
     <button mat-raised-button color="warn" routerLink="">Назад</button>

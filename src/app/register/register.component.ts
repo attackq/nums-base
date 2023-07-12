@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { filter, isEmpty, map, switchMap, tap, throwError } from 'rxjs';
 import { nanoid } from 'nanoid';
+import { ReCaptchaV3Service } from 'ng-recaptcha';
 
 @Component({
   selector: 'app-register',
@@ -15,12 +16,13 @@ import { nanoid } from 'nanoid';
 export class RegisterComponent implements OnInit {
   public lastUserId: number;
   public showPassword: boolean = false;
-
+  public captchaToken: string;
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
     private router: Router,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private recaptchaV3Service: ReCaptchaV3Service
   ) {}
 
   ngOnInit(): void {
@@ -28,6 +30,14 @@ export class RegisterComponent implements OnInit {
       if (users.length !== 0) {
         this.lastUserId = users[users.length - 1].id;
       }
+    });
+    this.executeImportantAction();
+  }
+
+  public executeImportantAction(): void {
+    this.recaptchaV3Service.execute('importantAction').subscribe((token) => {
+      this.captchaToken = token;
+      console.log(token);
     });
   }
 
@@ -59,7 +69,7 @@ export class RegisterComponent implements OnInit {
       createdAt: Date.now(),
       tokenId: nanoid(),
     };
-    if (this.registerForm.valid) {
+    if (this.registerForm.valid && this.captchaToken) {
       this.authService
         .getUserByUsername(username)
         .pipe(

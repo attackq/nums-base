@@ -34,6 +34,13 @@ import { ApprovePopupComponent } from './approve-popup/approve-popup.component';
 import { MatSortModule } from '@angular/material/sort';
 import { FormatIdPipe } from './service/formatid.pipe';
 import { CustomPaginator } from './service/CustomPaginatorConfiguration';
+import {
+  ReCaptchaV3Service,
+  RecaptchaModule,
+  RecaptchaV3Module,
+} from 'ng-recaptcha';
+import { RECAPTCHA_V3_SITE_KEY } from 'ng-recaptcha';
+import { environment } from 'src/environments/environment';
 
 @NgModule({
   declarations: [
@@ -52,6 +59,8 @@ import { CustomPaginator } from './service/CustomPaginatorConfiguration';
   ],
   imports: [
     BrowserModule,
+    RecaptchaModule,
+    RecaptchaV3Module,
     MatSortModule,
     AppRoutingModule,
     BrowserAnimationsModule,
@@ -77,6 +86,10 @@ import { CustomPaginator } from './service/CustomPaginatorConfiguration';
   providers: [
     { provide: LOCALE_ID, useValue: 'ru' },
     { provide: MatPaginatorIntl, useValue: CustomPaginator() },
+    {
+      provide: RECAPTCHA_V3_SITE_KEY,
+      useValue: '6LdHShYnAAAAAEC8KLL1DZ-bvNEyYSJI1B40IUM3',
+    },
   ],
   bootstrap: [AppComponent],
 })

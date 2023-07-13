@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { EditedUser, User } from './user.interface';
 import { Observable, ReplaySubject, Subject, map, tap } from 'rxjs';
 import { Card, CardNumber, NewNumber } from './number.interface';
+import { Feed } from './feed.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -13,6 +14,7 @@ export class AuthService {
 
   baseUserUrl: string = 'http://localhost:3000/users';
   baseNumbersUrl: string = 'http://localhost:3000/numbers';
+  baseFeedUrl: string = 'http://localhost:3000/feed';
 
   constructor(private http: HttpClient) {
     this.getAllUsers()
@@ -75,5 +77,15 @@ export class AuthService {
 
   deleteNumber(id: string, number: NewNumber) {
     return this.http.patch(this.baseNumbersUrl + '/' + id, number);
+  }
+
+  // feed
+
+  getFeed(): Observable<Feed[]> {
+    return this.http.get<Feed[]>(this.baseFeedUrl);
+  }
+
+  updateFeed(item: Feed[]) {
+    return this.http.post(this.baseFeedUrl, item);
   }
 }

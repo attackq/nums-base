@@ -29,7 +29,7 @@ export class NewcardPopupComponent {
           id: '0',
           product: '',
           creatorName: '',
-          createdAt: 0,
+          createdAt: Date.now(),
         },
       ],
     };

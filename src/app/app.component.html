@@ -1,7 +1,7 @@
 <mat-toolbar>
   <div class="toolbar">
     <div class="toolbar__logo">
-      <a routerLink="" class="toolbar__title">картотека.</a>
+      <a routerLink="feed" class="toolbar__title">картотека.</a>
       <div class="toolbar__links" *ngIf="currentUser">
         <a routerLink="numbers">Карточки</a>
         <a *ngIf="currentUser?.role === 'admin'" routerLink="users"

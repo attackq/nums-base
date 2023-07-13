@@ -12,6 +12,7 @@ import { Card, CardNumber, NewNumber } from '../service/number.interface';
 import { User } from '../service/user.interface';
 import { ToastrService } from 'ngx-toastr';
 import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
+import { Feed } from '../service/feed.interface';
 
 interface Product {
   viewValue: string;
@@ -29,7 +30,8 @@ export class NewnumberPopupComponent implements OnInit {
   public cardData: CardNumber[];
   public newData: NewNumber;
   public newId: number;
-
+  public feedData: Feed[];
+  public feedItem: Feed;
   selectedValue: string;
 
   products: Product[] = [
@@ -69,6 +71,7 @@ export class NewnumberPopupComponent implements OnInit {
   });
 
   ngOnInit(): void {
+    this.authService;
     this.currentUrl = this.router.url.slice(-6);
     this.authService.user$
       .pipe(
@@ -81,8 +84,6 @@ export class NewnumberPopupComponent implements OnInit {
               let currentNum = this.cardData.filter(
                 (i) => i.id === this.data.id
               )[0];
-              console.log(this.cardData);
-              console.log(currentNum);
               if (this.data.fn === 'add') {
                 this.addNumberForm.controls['id'].setValue(this.data.id);
                 this.addNumberForm.controls['title'].setValue('');
@@ -99,6 +100,11 @@ export class NewnumberPopupComponent implements OnInit {
               this.addNumberForm.controls['creator'].setValue(
                 this.currentUser?.lastName
               );
+            }),
+            switchMap(() => {
+              return this.authService
+                .getFeed()
+                .pipe(tap((res: Feed[]) => (this.feedData = res)));
             })
           );
         })
@@ -106,6 +112,29 @@ export class NewnumberPopupComponent implements OnInit {
       .subscribe();
   }
 
+  // addNumber() {
+  //   if (this.addNumberForm.valid) {
+  //     const number: CardNumber = {
+  //       title: this.addNumberForm.value.title,
+  //       id: this.data.id,
+  //       product: this.addNumberForm.value.product,
+  //       creatorName: this.addNumberForm.value.creator,
+  //       createdAt: Date.now(),
+  //     };
+  //     this.cardData.push(number);
+  //     const newNumber: NewNumber = {
+  //       data: this.cardData,
+  //     };
+  //     this.authService
+  //       .addNumberToCard(this.currentUrl, newNumber)
+  //       .subscribe((res) => {
+  //         this.dialog.closeAll();
+  //         this.toastr.success('Номер добавлен!');
+  //       });
+  //   } else {
+  //     this.toastr.error('Заполните данные.');
+  //   }
+  // }
   addNumber() {
     if (this.addNumberForm.valid) {
       const number: CardNumber = {
@@ -121,10 +150,23 @@ export class NewnumberPopupComponent implements OnInit {
       };
       this.authService
         .addNumberToCard(this.currentUrl, newNumber)
-        .subscribe((res) => {
-          this.dialog.closeAll();
-          this.toastr.success('Номер добавлен!');
-        });
+        .pipe(
+          tap(() => {
+            this.dialog.closeAll();
+            this.toastr.success('Номер добавлен!');
+            this.feedItem = {
+              lastname: this.addNumberForm.value.creator,
+              number: this.addNumberForm.value.title,
+              data: Date.now(),
+              action: 'добавил',
+            };
+            this.feedData.push(this.feedItem);
+          }),
+          switchMap(() => {
+            return this.authService.updateFeed(this.feedData);
+          })
+        )
+        .subscribe();
     } else {
       this.toastr.error('Заполните данные.');
     }

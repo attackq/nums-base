@@ -10,6 +10,7 @@ import { Feed } from './feed.interface';
 })
 export class AuthService {
   public user$: Subject<User | null> = new ReplaySubject<User | null>(1);
+  public feed$: Subject<Feed[]> = new ReplaySubject<Feed[]>(1);
   public isActiiveBtn$: Subject<boolean> = new ReplaySubject<boolean>(1);
 
   baseUserUrl: string = 'http://localhost:3000/users';

@@ -1,4 +1,12 @@
-<div *ngFor="let item of feed" class="feed">
-  <strong>{{ item.lastname }}</strong> {{ item.action }} номер
-  <strong>{{ item.number }}</strong>
+<div class="feed">
+  <div class="feed__item" *ngFor="let item of feed">
+    <!-- <div class="feed__name">{{ item.lastname }}</div>
+    <div class="feed__action">{{ item.action }}</div>
+    номер
+    <div class="feed__number">{{ item.number }}</div> -->
+    <span>{{ item.lastname }}</span>
+    {{ item.action }}
+    номер
+    <span>{{ item.number }}</span>
+  </div>
 </div>

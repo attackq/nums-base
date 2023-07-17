@@ -40,7 +40,6 @@ import {
   RecaptchaV3Module,
 } from 'ng-recaptcha';
 import { RECAPTCHA_V3_SITE_KEY } from 'ng-recaptcha';
-import { environment } from 'src/environments/environment';
 import { FeedComponent } from './feed/feed.component';
 
 @NgModule({

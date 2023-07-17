@@ -96,15 +96,16 @@ export class NewnumberPopupComponent implements OnInit {
                 );
               }
               this.lastNumberId = +this.data.id + 1;
-
               this.addNumberForm.controls['creator'].setValue(
                 this.currentUser?.lastName
               );
             }),
             switchMap(() => {
-              return this.authService
-                .getFeed()
-                .pipe(tap((res: Feed[]) => (this.feedData = res)));
+              return this.authService.getFeed().pipe(
+                tap((res: Feed[]) => {
+                  this.feedData = res;
+                })
+              );
             })
           );
         })
@@ -155,6 +156,7 @@ export class NewnumberPopupComponent implements OnInit {
             this.dialog.closeAll();
             this.toastr.success('Номер добавлен!');
             this.feedItem = {
+              id: this.feedData[this.feedData.length - 1].id,
               lastname: this.addNumberForm.value.creator,
               number: this.addNumberForm.value.title,
               data: Date.now(),
@@ -163,7 +165,12 @@ export class NewnumberPopupComponent implements OnInit {
             this.feedData.push(this.feedItem);
           }),
           switchMap(() => {
-            return this.authService.updateFeed(this.feedData);
+            return this.authService.updateFeed(this.feedData).pipe(
+              tap((res) => {
+                console.log('added');
+                this.authService.feed$.next(this.feedData);
+              })
+            );
           })
         )
         .subscribe();

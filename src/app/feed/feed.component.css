@@ -1,5 +1,17 @@
 .feed {
+  margin-top: 50px;
   display: flex;
-  align-items: center;
+  flex-direction: column;
   justify-content: center;
+  align-items: center;
+}
+
+.feed__item {
+  display: block;
+  margin-top: 1rem;
+  font-size: 18px;
+}
+
+.feed__item span {
+  font-weight: bold;
 }

@@ -13,6 +13,7 @@ import { User } from '../service/user.interface';
 import { ToastrService } from 'ngx-toastr';
 import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 import { Feed } from '../service/feed.interface';
+import { FormatIdPipe } from '../service/formatid.pipe';
 
 interface Product {
   viewValue: string;
@@ -33,6 +34,7 @@ export class NewnumberPopupComponent implements OnInit {
   public feedData: Feed[];
   public feedItem: Feed;
   selectedValue: string;
+  groupId: string;
 
   products: Product[] = [
     { viewValue: 'Восток-3Д' },
@@ -57,7 +59,8 @@ export class NewnumberPopupComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private toastr: ToastrService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private formatId: FormatIdPipe
   ) {}
 
   addNumberForm: FormGroup = this.fb.group({
@@ -81,6 +84,7 @@ export class NewnumberPopupComponent implements OnInit {
             tap((res: Card) => {
               console.log(res);
               this.cardData = res.data;
+              this.groupId = res.id;
               let currentNum = this.cardData.filter(
                 (i) => i.id === this.data.id
               )[0];
@@ -98,13 +102,6 @@ export class NewnumberPopupComponent implements OnInit {
               this.lastNumberId = +this.data.id + 1;
               this.addNumberForm.controls['creator'].setValue(
                 this.currentUser?.lastName
-              );
-            }),
-            switchMap(() => {
-              return this.authService.getFeed().pipe(
-                tap((res: Feed[]) => {
-                  this.feedData = res;
-                })
               );
             })
           );
@@ -136,6 +133,7 @@ export class NewnumberPopupComponent implements OnInit {
   //     this.toastr.error('Заполните данные.');
   //   }
   // }
+
   addNumber() {
     if (this.addNumberForm.valid) {
       const number: CardNumber = {
@@ -155,25 +153,35 @@ export class NewnumberPopupComponent implements OnInit {
           tap(() => {
             this.dialog.closeAll();
             this.toastr.success('Номер добавлен!');
-            this.feedItem = {
-              id: this.feedData[this.feedData.length - 1].id,
-              lastname: this.addNumberForm.value.creator,
-              number: this.addNumberForm.value.title,
-              data: Date.now(),
-              action: 'добавил',
-            };
-            this.feedData.push(this.feedItem);
           }),
           switchMap(() => {
-            return this.authService.updateFeed(this.feedData).pipe(
-              tap((res) => {
-                console.log('added');
+            return this.authService.getFeed().pipe(
+              tap((res: Feed[]) => {
+                this.feedData = res;
+                let id: number;
+                if (res.length === 0) {
+                  id = 0;
+                } else {
+                  id = this.feedData[this.feedData.length - 1].id + 1;
+                }
+                const formatedId = this.formatId.transform(number.id);
+                this.feedItem = {
+                  id: id,
+                  lastname: this.addNumberForm.value.creator,
+                  number: `${this.groupId}.${formatedId}`,
+                  data: Date.now(),
+                  action: 'добавил',
+                };
+                this.feedData.push(this.feedItem);
                 this.authService.feed$.next(this.feedData);
+              }),
+              switchMap(() => {
+                return this.authService.updateFeed(this.feedItem);
               })
             );
           })
         )
-        .subscribe();
+        .subscribe(() => {});
     } else {
       this.toastr.error('Заполните данные.');
     }

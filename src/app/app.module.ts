@@ -91,6 +91,7 @@ import { FeedComponent } from './feed/feed.component';
       provide: RECAPTCHA_V3_SITE_KEY,
       useValue: '6LdHShYnAAAAAEC8KLL1DZ-bvNEyYSJI1B40IUM3',
     },
+    FormatIdPipe,
   ],
   bootstrap: [AppComponent],
 })

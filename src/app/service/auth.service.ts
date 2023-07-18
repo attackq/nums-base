@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { EditedUser, User } from './user.interface';
-import { Observable, ReplaySubject, Subject, map, tap } from 'rxjs';
+import { Observable, ReplaySubject, Subject, map, switchMap, tap } from 'rxjs';
 import { Card, CardNumber, NewNumber } from './number.interface';
 import { Feed } from './feed.interface';
 
@@ -27,6 +27,11 @@ export class AuthService {
         tap((users: User[]) => {
           this.user$.next(users[0]);
           this.isActiiveBtn$.next(true);
+        }),
+        switchMap(() => {
+          return this.getFeed().pipe(
+            tap((res: Feed[]) => this.feed$.next(res))
+          );
         })
       )
       .subscribe();
@@ -86,7 +91,7 @@ export class AuthService {
     return this.http.get<Feed[]>(this.baseFeedUrl);
   }
 
-  updateFeed(item: Feed[]) {
+  updateFeed(item: Feed) {
     return this.http.post(this.baseFeedUrl, item);
   }
 }

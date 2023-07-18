@@ -169,6 +169,7 @@ export class NewnumberPopupComponent implements OnInit {
                   id: id,
                   lastname: this.addNumberForm.value.creator,
                   number: `${this.groupId}.${formatedId}`,
+                  title: this.addNumberForm.value.title,
                   data: Date.now(),
                   action: 'добавил',
                 };

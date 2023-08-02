@@ -108,6 +108,7 @@ export class NewnumberPopupComponent implements OnInit {
         })
       )
       .subscribe();
+    this.authService.feed$.subscribe((res) => console.log(res));
   }
 
   // addNumber() {

@@ -14,5 +14,6 @@ export class FeedComponent implements OnInit {
 
   ngOnInit(): void {
     this.authService.feed$.subscribe((res) => (this.feed = res));
+    // this.authService.getFeed().subscribe((res) => (this.feed = res));
   }
 }

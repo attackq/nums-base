@@ -6,12 +6,14 @@ import { UserslistComponent } from './userslist/userslist.component';
 import { NumbersListComponent } from './numbers-list/numbers-list.component';
 import { SelectedNumberComponent } from './selected-number/selected-number.component';
 import { FeedComponent } from './feed/feed.component';
+import { ChatComponent } from './chat/chat.component';
 
 const routes: Routes = [
   { path: '', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'users', component: UserslistComponent },
   { path: 'feed', component: FeedComponent },
+  { path: 'chat', component: ChatComponent },
   {
     path: 'numbers',
     component: NumbersListComponent,

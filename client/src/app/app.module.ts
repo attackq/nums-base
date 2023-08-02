@@ -41,6 +41,7 @@ import {
 } from 'ng-recaptcha';
 import { RECAPTCHA_V3_SITE_KEY } from 'ng-recaptcha';
 import { FeedComponent } from './feed/feed.component';
+import { ChatComponent } from './chat/chat.component';
 
 @NgModule({
   declarations: [
@@ -57,6 +58,7 @@ import { FeedComponent } from './feed/feed.component';
     ApprovePopupComponent,
     FormatIdPipe,
     FeedComponent,
+    ChatComponent,
   ],
   imports: [
     BrowserModule,

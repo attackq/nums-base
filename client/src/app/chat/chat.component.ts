@@ -23,8 +23,11 @@ export class ChatComponent implements OnInit {
       this.currentUser = res;
     });
     this.chatService.getNewMessage().subscribe((mes) => {
-      this.messageList.push(mes);
+      if (mes !== '') {
+        this.messageList.push(mes);
+      }
     });
+    console.log(this.messageList);
   }
 
   sendMessage() {

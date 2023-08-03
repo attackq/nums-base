@@ -1,0 +1,18 @@
+.chat__container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+  background-color: rebeccapurple;
+  padding: 20px;
+  border-radius: 20px;
+  height: 300px;
+}
+.chat__messages {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* align-items: flex-end; */
+  height: 100%;
+  overflow-y: scroll;
+  flex: 1 1 auto;
+}

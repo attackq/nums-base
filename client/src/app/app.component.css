@@ -63,3 +63,19 @@ span a {
   width: 100%;
   background: #8fff00;
 }
+
+.chat__link {
+  position: absolute;
+  right: 10%;
+  bottom: 20px;
+  cursor: pointer;
+}
+.chat__link mat-icon {
+  width: 36px;
+  height: 36px;
+  font-size: 36px;
+  transition: all 0.3s ease;
+}
+.chat__link mat-icon:hover {
+  transform: scale(1.5);
+}

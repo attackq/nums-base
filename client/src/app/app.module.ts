@@ -22,7 +22,7 @@ import {
   MatPaginatorModule,
 } from '@angular/material/paginator';
 import { DeletePopupComponent } from './delete-popup/delete-popup.component';
-import { MatDialogModule } from '@angular/material/dialog';
+import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { EditUserComponent } from './edit-user/edit-user.component';
 import { NumbersListComponent } from './numbers-list/numbers-list.component';
@@ -62,9 +62,11 @@ import { ChatComponent } from './chat/chat.component';
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     RecaptchaModule,
     RecaptchaV3Module,
     MatSortModule,
+    MatDialogModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     MatFormFieldModule,
@@ -92,6 +94,10 @@ import { ChatComponent } from './chat/chat.component';
     {
       provide: RECAPTCHA_V3_SITE_KEY,
       useValue: '6LdHShYnAAAAAEC8KLL1DZ-bvNEyYSJI1B40IUM3',
+    },
+    {
+      provide: MatDialogRef,
+      useValue: {},
     },
     FormatIdPipe,
   ],

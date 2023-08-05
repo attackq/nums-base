@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, NgZone, OnInit } from '@angular/core';
 import { ChatService } from '../service/chat.service';
 import { AuthService } from '../service/auth.service';
 import { User } from '../service/user.interface';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-chat',
@@ -15,7 +16,9 @@ export class ChatComponent implements OnInit {
 
   constructor(
     private chatService: ChatService,
-    private authService: AuthService
+    private authService: AuthService,
+    public dialogRef: MatDialogRef<ChatComponent>,
+    private ngZone: NgZone
   ) {}
 
   ngOnInit(): void {
@@ -34,4 +37,6 @@ export class ChatComponent implements OnInit {
     this.chatService.sendMessage(this.newMessage);
     this.newMessage = '';
   }
+
+  closeDialog() {}
 }

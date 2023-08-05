@@ -1,14 +1,16 @@
 <div class="chat__container">
-  <h1 mat-dialog-title>Let's have some fun</h1>
-  <div mat-dialog-content class="chat__messages">
-    <li *ngFor="let message of messageList">{{ message }}</li>
+  <div class="chat__header">
+    <div class="chat__title">Chat</div>
+    <mat-icon mat-dialog-close>close</mat-icon>
   </div>
+  <ul mat-dialog-content class="chat__messages">
+    <li *ngFor="let message of messageList">{{ message }}</li>
+  </ul>
   <div class="chat__input">
     <input
       [(ngModel)]="newMessage"
       (keyup)="$event.keyCode == 13 && sendMessage()"
     />
-    <button (click)="sendMessage()">Send Message</button>
+    <button mat-raised-button color="warn" (click)="sendMessage()">Send</button>
   </div>
-  <!-- <button mat-button mat-dialog-close>Close</button> -->
 </div>

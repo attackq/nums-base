@@ -43,6 +43,15 @@
         <td mat-cell *matCellDef="let num">{{ num.product }}</td>
       </ng-container>
 
+      <ng-container matColumnDef="drawing">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Чертеж</th>
+        <td mat-cell *matCellDef="let num">
+          <a href="{{ num.drawing }}" target="_blank" style="cursor: pointer">
+            <mat-icon>insert_drive_file</mat-icon></a
+          >
+        </td>
+      </ng-container>
+
       <ng-container matColumnDef="creator">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Фамилия</th>
         <td mat-cell *matCellDef="let num">{{ num.creatorName }}</td>
@@ -95,7 +104,8 @@
       </tr>
     </table>
     <mat-paginator
-      [pageSizeOptions]="[10, 25, 100]"
+      [pageSize]="5"
+      [pageSizeOptions]="[5, 10]"
       aria-label="Select page of users"
     ></mat-paginator>
   </div>

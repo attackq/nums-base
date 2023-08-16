@@ -34,6 +34,7 @@ export class SelectedNumberComponent implements OnInit, AfterViewInit {
     'id',
     'title',
     'product',
+    'drawing',
     'creator',
     'date',
     'actions',
@@ -42,7 +43,7 @@ export class SelectedNumberComponent implements OnInit, AfterViewInit {
   currentUser: User | null;
   isShowTable: boolean = false;
   public cardData: CardNumber[];
-  public currentCardId: string;
+  public currentCardId: number;
   public newData: NewNumber;
   public newNumberId: string;
 

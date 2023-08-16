@@ -1,7 +1,8 @@
 export interface CardNumber {
   title: string;
-  id: string;
+  id: number;
   product: string;
+  drawing: string;
   creatorName: string | undefined;
   createdAt: number | null;
 }

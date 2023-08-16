@@ -35,6 +35,7 @@ export class NewnumberPopupComponent implements OnInit {
   public feedItem: Feed;
   selectedValue: string;
   groupId: string;
+  srcResult: string;
 
   products: Product[] = [
     { viewValue: 'Восток-3Д' },
@@ -51,7 +52,7 @@ export class NewnumberPopupComponent implements OnInit {
   constructor(
     @Inject(MAT_DIALOG_DATA)
     public data: {
-      id: string;
+      id: number;
       fn: string;
     },
     private fb: FormBuilder,
@@ -70,6 +71,7 @@ export class NewnumberPopupComponent implements OnInit {
       Validators.pattern('^[\u0400-\u04FF]+$'),
     ]),
     product: this.fb.control('', Validators.required),
+    drawing: this.fb.control('', Validators.required),
     creator: this.fb.control('', Validators.required),
   });
 
@@ -80,7 +82,7 @@ export class NewnumberPopupComponent implements OnInit {
       .pipe(
         tap((user: User | null) => (this.currentUser = user)),
         switchMap(() => {
-          return this.authService.getCardById(this.currentUrl).pipe(
+          return this.authService.getCardById(+this.currentUrl).pipe(
             tap((res: Card) => {
               console.log(res);
               this.cardData = res.data;
@@ -99,7 +101,7 @@ export class NewnumberPopupComponent implements OnInit {
                   currentNum.product
                 );
               }
-              this.lastNumberId = +this.data.id + 1;
+              this.lastNumberId = this.data.id + 1;
               this.addNumberForm.controls['creator'].setValue(
                 this.currentUser?.lastName
               );
@@ -111,36 +113,13 @@ export class NewnumberPopupComponent implements OnInit {
     this.authService.feed$.subscribe((res) => console.log(res));
   }
 
-  // addNumber() {
-  //   if (this.addNumberForm.valid) {
-  //     const number: CardNumber = {
-  //       title: this.addNumberForm.value.title,
-  //       id: this.data.id,
-  //       product: this.addNumberForm.value.product,
-  //       creatorName: this.addNumberForm.value.creator,
-  //       createdAt: Date.now(),
-  //     };
-  //     this.cardData.push(number);
-  //     const newNumber: NewNumber = {
-  //       data: this.cardData,
-  //     };
-  //     this.authService
-  //       .addNumberToCard(this.currentUrl, newNumber)
-  //       .subscribe((res) => {
-  //         this.dialog.closeAll();
-  //         this.toastr.success('Номер добавлен!');
-  //       });
-  //   } else {
-  //     this.toastr.error('Заполните данные.');
-  //   }
-  // }
-
   addNumber() {
     if (this.addNumberForm.valid) {
       const number: CardNumber = {
         title: this.addNumberForm.value.title,
         id: this.data.id,
         product: this.addNumberForm.value.product,
+        drawing: this.addNumberForm.value.drawing,
         creatorName: this.addNumberForm.value.creator,
         createdAt: Date.now(),
       };
@@ -191,7 +170,7 @@ export class NewnumberPopupComponent implements OnInit {
 
   editNumber() {
     this.authService
-      .getCardById(this.currentUrl)
+      .getCardById(+this.currentUrl)
       .pipe(
         map((res: Card) => {
           return res.data.map((i) => {
@@ -200,6 +179,7 @@ export class NewnumberPopupComponent implements OnInit {
                 title: this.addNumberForm.value.title,
                 id: this.data.id,
                 product: this.addNumberForm.value.product,
+                drawing: this.addNumberForm.value.drawing,
                 creatorName: this.addNumberForm.value.creator,
                 createdAt: Date.now(),
               };
@@ -215,7 +195,7 @@ export class NewnumberPopupComponent implements OnInit {
           };
         }),
         switchMap(() => {
-          return this.authService.deleteNumber(this.currentUrl, this.newData);
+          return this.authService.deleteNumber(+this.currentUrl, this.newData);
         })
       )
       .subscribe(() => {

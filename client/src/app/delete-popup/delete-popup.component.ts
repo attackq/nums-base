@@ -11,12 +11,12 @@ import { ToastrService } from 'ngx-toastr';
 export class DeletePopupComponent {
   constructor(
     @Inject(MAT_DIALOG_DATA)
-    public data: { userId: string; username: string; text: string },
+    public data: { userId: number; username: string; text: string },
     private authService: AuthService,
     private toastr: ToastrService
   ) {}
 
-  deleteUser(id: string) {
+  deleteUser(id: number) {
     this.authService.deleteUser(id).subscribe(() => {
       this.toastr.success('Пользователь удален!');
     });

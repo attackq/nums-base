@@ -16,24 +16,24 @@ export class ApprovePopupComponent {
   constructor(
     @Inject(MAT_DIALOG_DATA)
     public data: {
-      id: string;
+      id: number;
       username: string;
       titleText: string;
       text: string;
       fn: string;
-      currentCardId: string;
+      currentCardId: number;
     },
     private authService: AuthService,
     private toastr: ToastrService
   ) {}
 
-  deleteUser(id: string) {
+  deleteUser(id: number) {
     this.authService.deleteUser(id).subscribe(() => {
       this.toastr.success('Пользователь удален!');
     });
   }
 
-  deleteNumber(id: string) {
+  deleteNumber(id: number) {
     this.authService
       .getCardById(this.data.currentCardId)
       .pipe(
@@ -42,8 +42,9 @@ export class ApprovePopupComponent {
             if (i.id === id) {
               const empty: CardNumber = {
                 title: '',
-                id: id,
+                id: +id,
                 product: '',
+                drawing: '',
                 creatorName: '',
                 createdAt: null,
               };
@@ -54,13 +55,14 @@ export class ApprovePopupComponent {
           });
         }),
         tap((res: CardNumber[]) => {
+          console.log(this.data.currentCardId);
           this.newData = {
             data: res,
           };
         }),
         switchMap(() => {
           return this.authService.deleteNumber(
-            this.data.currentCardId,
+            +this.data.currentCardId,
             this.newData
           );
         })

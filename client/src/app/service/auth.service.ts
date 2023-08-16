@@ -59,7 +59,7 @@ export class AuthService {
     return this.http.patch(this.baseUserUrl + '/' + id, body);
   }
 
-  deleteUser(id: string) {
+  deleteUser(id: number) {
     return this.http.delete(this.baseUserUrl + '/' + id);
   }
 
@@ -69,7 +69,7 @@ export class AuthService {
     return this.http.get<Card[]>(this.baseNumbersUrl);
   }
 
-  getCardById(id: string): Observable<Card> {
+  getCardById(id: number): Observable<Card> {
     return this.http.get<Card>(this.baseNumbersUrl + '/' + id);
   }
 
@@ -81,7 +81,7 @@ export class AuthService {
     return this.http.patch(this.baseNumbersUrl + '/' + id, number);
   }
 
-  deleteNumber(id: string, number: NewNumber) {
+  deleteNumber(id: number, number: NewNumber) {
     return this.http.patch(this.baseNumbersUrl + '/' + id, number);
   }
 

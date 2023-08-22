@@ -46,7 +46,12 @@
       <ng-container matColumnDef="drawing">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Чертеж</th>
         <td mat-cell *matCellDef="let num">
-          <a href="{{ num.drawing }}" target="_blank" style="cursor: pointer">
+          <a
+            href="{{ num.drawing }}"
+            target="_blank"
+            style="cursor: pointer"
+            *ngIf="num.drawing !== ''"
+          >
             <mat-icon>insert_drive_file</mat-icon></a
           >
         </td>

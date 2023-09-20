@@ -20,11 +20,13 @@
     "@angular/platform-browser": "^16.0.0",
     "@angular/platform-browser-dynamic": "^16.0.0",
     "@angular/router": "^16.0.0",
+    "@types/three": "^0.155.1",
     "nanoid": "^4.0.2",
     "ng-recaptcha": "^12.0.1",
     "ngx-toastr": "^17.0.2",
     "rxjs": "~7.8.0",
     "socket.io-client": "^4.7.1",
+    "three": "^0.156.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.13.0"
   },

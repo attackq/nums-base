@@ -18,6 +18,7 @@ import { Card, CardNumber, NewNumber } from '../service/number.interface';
 import { ToastrService } from 'ngx-toastr';
 import { DeletePopupComponent } from '../delete-popup/delete-popup.component';
 import { ApprovePopupComponent } from '../approve-popup/approve-popup.component';
+import { NumberModelComponent } from '../number-model/number-model.component';
 
 @Component({
   selector: 'app-selected-number',
@@ -135,5 +136,9 @@ export class SelectedNumberComponent implements OnInit, AfterViewInit {
       },
     });
     dialogRef.afterClosed().subscribe(() => this.getDataSource());
+  }
+
+  openShowModelDialog() {
+    let dialogRef = this.dialog.open(NumberModelComponent);
   }
 }

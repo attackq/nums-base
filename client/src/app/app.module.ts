@@ -42,6 +42,7 @@ import {
 import { RECAPTCHA_V3_SITE_KEY } from 'ng-recaptcha';
 import { FeedComponent } from './feed/feed.component';
 import { ChatComponent } from './chat/chat.component';
+import { NumberModelComponent } from './number-model/number-model.component';
 
 @NgModule({
   declarations: [
@@ -59,6 +60,7 @@ import { ChatComponent } from './chat/chat.component';
     FormatIdPipe,
     FeedComponent,
     ChatComponent,
+    NumberModelComponent,
   ],
   imports: [
     BrowserModule,

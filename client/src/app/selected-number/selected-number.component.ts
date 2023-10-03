@@ -138,7 +138,24 @@ export class SelectedNumberComponent implements OnInit, AfterViewInit {
     dialogRef.afterClosed().subscribe(() => this.getDataSource());
   }
 
-  openShowModelDialog() {
+  openShowModelDialog(id: number) {
     let dialogRef = this.dialog.open(NumberModelComponent);
+    this.navigateToFoo(id);
+    dialogRef.afterClosed().subscribe(() => {
+      this.router.navigate([], {
+        queryParams: {
+          drawing: null,
+        },
+      });
+    });
+  }
+
+  navigateToFoo(id: number) {
+    this.router.navigate([], {
+      queryParams: {
+        drawing: id,
+      },
+      queryParamsHandling: 'merge',
+    });
   }
 }

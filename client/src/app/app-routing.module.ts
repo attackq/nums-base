@@ -14,7 +14,7 @@ const routes: Routes = [
   { path: 'register', component: RegisterComponent },
   { path: 'users', component: UserslistComponent },
   { path: 'feed', component: FeedComponent },
-  { path: 'model', component: NumberModelComponent },
+  // { path: 'model', component: NumberModelComponent },
   { path: 'chat', component: ChatComponent },
   {
     path: 'numbers',

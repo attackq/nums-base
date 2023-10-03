@@ -46,7 +46,7 @@
       <ng-container matColumnDef="drawing">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Чертеж</th>
         <td mat-cell *matCellDef="let num">
-          <button (click)="openShowModelDialog()">
+          <button (click)="openShowModelDialog(num.id)">
             <a *ngIf="num.drawing !== ''">
               <mat-icon>insert_drive_file</mat-icon></a
             >
